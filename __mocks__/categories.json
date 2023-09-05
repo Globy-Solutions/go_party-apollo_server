@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Events",
+    "picture": "https://fastly.picsum.photos/id/117/1544/1024.jpg?hmac=xFWtVUv1xkFVVidifC3drKerU_k_za4w28fv5etvxRc",
+    "description": "Events"
+  },
+  {
+    "id": 2,
+    "title": "Places",
+    "picture": "https://fastly.picsum.photos/id/122/4147/2756.jpg?hmac=-B_1uAvYufznhjeA9xSSAJjqt07XrVzDWCf5VDNX0pQ",
+    "description": "Places"
+  },
+  {
+    "id": 3,
+    "title": "Other",
+    "picture": "https://fastly.picsum.photos/id/122/4147/2756.jpg?hmac=-B_1uAvYufznhjeA9xSSAJjqt07XrVzDWCf5VDNX0pQ",
+    "description": "Other"
+  },
+  {
+    "id": 4,
+    "title": "Another",
+    "picture": "https://fastly.picsum.photos/id/122/4147/2756.jpg?hmac=-B_1uAvYufznhjeA9xSSAJjqt07XrVzDWCf5VDNX0pQ",
+    "description": "Another"
+  }
+]

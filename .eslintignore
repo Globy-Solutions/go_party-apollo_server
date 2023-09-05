@@ -1,0 +1,10 @@
+node_modules/
+android/
+ios/
+Gemfile
+Gemfile.lock
+metro.config.js
+.ruby-version
+.gitignore
+.node-version
+yarn.lock
