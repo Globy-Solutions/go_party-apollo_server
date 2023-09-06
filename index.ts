@@ -1,21 +1,40 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from '@apollo/server';
+import { ApolloServerPluginCacheControl } from '@apollo/server/plugin/cacheControl';
+import { ApolloServerPluginLandingPageDisabled } from '@apollo/server/plugin/disabled';
+import { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } from '@apollo/server/plugin/landingPage/default';
+
+import { startStandaloneServer } from '@apollo/server/standalone';
 
 import { resolvers, typeDefs } from './modules';
 
-const {
-  ApolloServerPluginLandingPageLocalDefault
-} = require('apollo-server-core');
+interface MyContext {
+  token?: String;
+}
 
-const server = new ApolloServer({
+const server = new ApolloServer<MyContext>({
   typeDefs,
   resolvers,
   csrfPrevention: true,
   cache: 'bounded',
   plugins: [
-    ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+    process.env.NODE_ENV === 'production'
+      ? (ApolloServerPluginLandingPageProductionDefault({
+        footer: false,
+      }), ApolloServerPluginLandingPageDisabled())
+      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+    ApolloServerPluginCacheControl({
+      // Cache everything for 1 second by default.
+      defaultMaxAge: 1,
+      // Don't send the `cache-control` response header.
+      calculateHttpHeaders: false,
+    }),
   ],
 });
+(async () => {
+  const { url } = await startStandaloneServer(server, {
+    context: async ({ req }) => ({ token: req.headers.token }),
+    listen: { port: 4000 },
+  });
 
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+  console.log(`🚀  Server ready at: ${url}`);
+})()

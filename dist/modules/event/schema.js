@@ -1,19 +1,13 @@
 export default `
 scalar Date
 
-interface EventInt {
-  title: String!
-  category: Category!
-}
-
-type Event implements EventInt {
+type Event {
   created: Date
   updated: Date
   deleted: Date
   id: ID!
   title: String!
   name: String!
-  category: Category!
   isActive: Boolean
   image: Int
   picture: [String]
@@ -28,11 +22,8 @@ type Event implements EventInt {
   likes: [User]
   goinTo: [User]
 }
-type ResponseEvent {
-  data: [Event]
-}
 extend type Query {
-  getAllEvents(isActive: Boolean): ResponseEvent
-  getEventById(id: ID!): ResponseEvent
+  getAllEvents: [Event]
+  getEventById(id: ID!): Event
 }
-`
+`;

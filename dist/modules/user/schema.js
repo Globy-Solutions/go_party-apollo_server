@@ -3,11 +3,9 @@ type User {
   id: ID!
   name: String!
   avatar: String
-  email: String!
-  password: String!
 }
 extend type Query {
   getAllUsers: [User]
   getUserById(id: ID!): User
 }
-`
+`;
