@@ -1,23 +1,13 @@
 export default `
-scalar Date
-
-interface EventInt {
-  title: String!
-  category: Category!
-}
-
-type Event implements EventInt {
-  created: Date
-  updated: Date
-  deleted: Date
+type Event implements ABM {
   id: ID!
   title: String!
   name: String!
-  category: Category!
   isActive: Boolean
+  categoryId: Category!
   image: Int
-  picture: [String]
-  video: String
+  pictures: [String]
+  videos: [String]
   price: Float
   address: String
   about: String
@@ -27,6 +17,10 @@ type Event implements EventInt {
   followers: [User]
   likes: [User]
   goinTo: [User]
+  comments: [Comment]
+  created_date: Date
+  updated_date: Date
+  deleted_date: Date
 }
 type ResponseEvent {
   data: [Event]

@@ -17,5 +17,12 @@ export default {
       }
       return { data, notification: { type: 'error', message: 'SignIn failed' } }
     }
+  },
+  Mutation: {
+    signOut: async (_: any, { id, accessToken, idToken } :
+      { id: string, accessToken: string, idToken: string }) => {
+      console.log('signOut', id, accessToken, idToken);
+      return { notification: { type: 'success', message: 'SignOut successfully' } }
+    }
   }
 }

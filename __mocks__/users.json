@@ -4,6 +4,7 @@
     "email": "msproat0@vistaprint.com",
     "name": "Maurice Sproat",
     "password": "123456",
+    "phone": "1-(212) 555-5555",
     "avatar": "https://robohash.org/autemquasiqui.png?size=50x50&set=set1"
   },
   {
@@ -11,6 +12,7 @@
     "email": "kpoppleton1@yellowpages.com",
     "name": "Kathleen Poppleton",
     "password": "123456",
+    "phone": "1-(212) 555-5555",
     "avatar": "https://robohash.org/autemquasiqui.png?size=50x50&set=set1"
   }
 ]

@@ -9,13 +9,13 @@
     "start": "nodemon --watch './**' --ext 'ts,json' --exec 'ts-node ./index.ts'"
   },
   "dependencies": {
-    "@apollo/server": "^4.9.3",
-    "graphql": "^16.8.0"
+    "@apollo/server": "4.9.3",
+    "graphql": "16.8.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.17",
-    "@types/node": "^20.5.9",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "@types/express": "4.17.17",
+    "@types/node": "20.5.9",
+    "ts-node": "10.9.1",
+    "typescript": "5.2.2"
   }
 }

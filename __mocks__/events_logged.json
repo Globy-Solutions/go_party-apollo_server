@@ -4,28 +4,16 @@
     "title": "M.A en VIVO",
     "name": "Club Museum",
     "isActive": true,
-    "goinTo": [
-      {
-        "id": 1,
-        "name": "Frank",
-        "avatar": "https://i.pravatar.cc/150?img=1"
-      },
-      {
-        "id": 3,
-        "name": "Peter",
-        "avatar": "https://i.pravatar.cc/150?img=3"
-      }
-    ],
+    "categoryId": 1,
     "image": 0,
-    "picture": [
+    "pictures": [
       "https://as2.ftcdn.net/v2/jpg/01/99/20/39/1000_F_199203973_8X2E8ryOgs5r2qOerV96fH33Kpxs5SH4.jpg",
       "https://as2.ftcdn.net/v2/jpg/01/20/28/25/1000_F_120282530_gMCruc8XX2mwf5YtODLV2O1TGHzu4CAb.jpg"
     ],
-    "video": "https://www.youtube.com/watch?v=7sDY4m8KNLc",
+    "videos": ["https://www.youtube.com/watch?v=7sDY4m8KNLc"],
     "price": 168,
     "address": "Perú 535, C1068AAA CABA",
     "about": "Un lugar imponente ubicado en la turística zona de San Telmo, su arquitectura fue diseñada por G. Eiffel conservando el estilo arquitectónico que posee la torre Eiffel. En sus 3 pisos se desarrollan distintos sectores, pistas, livings, 5 barras y un EXCLUSIVO VIP.",
-    "created": "2016-07-02T09:16:26 +05:00",
     "latitude": -34.6141881,
     "longitude": -58.3774831,
     "tags": [
@@ -69,6 +57,18 @@
         "avatar": "https://i.pravatar.cc/150?img=6"
       }
     ],
+    "goinTo": [
+      {
+        "id": 1,
+        "name": "Frank",
+        "avatar": "https://i.pravatar.cc/150?img=1"
+      },
+      {
+        "id": 3,
+        "name": "Peter",
+        "avatar": "https://i.pravatar.cc/150?img=3"
+      }
+    ],
     "followers": [
       {
         "id": 1,
@@ -89,130 +89,31 @@
     "comments": [
       {
         "id": 0,
-        "user": 1,
+        "userId": 1,
+        "name": "Frank",
+        "avatar": "https://i.pravatar.cc/150?img=4",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, voluptatum.",
         "date": "2015-07-06T06:55:58 +05:00"
       },
       {
         "id": 1,
-        "user": 2,
+        "userId": 2,
+        "name": "John",
+        "avatar": "https://i.pravatar.cc/150?img=5",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, voluptatum.",
         "date": "2015-07-06T06:55:58 +05:00"
       },
       {
         "id": 2,
-        "user": 3,
+        "userId": 3,
+        "name": "Peter",
+        "avatar": "https://i.pravatar.cc/150?img=6",
         "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, voluptatum.",
         "date": "2015-07-06T06:55:58 +05:00"
       }
-    ]
-  },
-  {
-    "id": 1,
-    "title": "voluptate",
-    "name": "elit",
-    "isActive": true,
-    "image": 0,
-    "picture": [
-      "https://as2.ftcdn.net/v2/jpg/01/20/28/25/1000_F_120282530_gMCruc8XX2mwf5YtODLV2O1TGHzu4CAb.jpg"
     ],
-    "video": "https://www.youtube.com/watch?v=7sDY4m8KNLc",
-    "price": 592,
-    "address": "199 Riverdale Avenue, Belmont, Alabama, 7129",
-    "about": "Occaecat id tempor velit anim eiusmod deserunt consequat nisi. Proident labore nulla laborum officia est. Sit ea anim do Lorem deserunt fugiat ea elit fugiat proident adipisicing reprehenderit. Ea eu magna consectetur anim duis esse deserunt. Excepteur nisi exercitation tempor velit excepteur et dolor mollit nisi ex. Nostrud dolor id Lorem deserunt id culpa dolor adipisicing qui pariatur do magna labore.\r\n",
-    "created": "2020-11-21T05:05:45 +06:00",
-    "latitude": 43.045411,
-    "longitude": 153.299657,
-    "tags": [
-      "labore",
-      "dolor",
-      "enim",
-      "velit",
-      "aliqua",
-      "id",
-      "nostrud"
-    ],
-    "likes": [
-      1,
-      2
-    ],
-    "followers": [
-      1,
-      2
-    ],
-    "comments": [
-      {
-        "id": 0,
-        "user": 1,
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, voluptatum.",
-        "date": "2015-07-06T06:55:58 +05:00"
-      },
-      {
-        "id": 1,
-        "user": 2,
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, voluptatum.",
-        "date": "2015-07-06T06:55:58 +05:00"
-      },
-      {
-        "id": 2,
-        "user": 3,
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, voluptatum.",
-        "date": "2015-07-06T06:55:58 +05:00"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "title": "ut",
-    "name": "eiusmod",
-    "isActive": true,
-    "image": 0,
-    "picture": [
-      "https://as2.ftcdn.net/v2/jpg/01/99/21/01/1000_F_199210113_PO4I2F3CAfEhCnVnWNveK9mlgWyxY8jn.jpg"
-    ],
-    "video": "https://www.youtube.com/watch?v=7sDY4m8KNLc",
-    "price": 772,
-    "address": "182 Mill Road, Eureka, Delaware, 7757",
-    "about": "Duis sint consequat dolor et ipsum do dolore mollit ex et voluptate est elit. Aliquip in cupidatat cupidatat exercitation ea elit nisi voluptate cupidatat irure nostrud. Ut ex quis officia qui. Excepteur dolor in ad nostrud. Id nisi ea exercitation tempor sunt culpa id.\r\n",
-    "created": "2019-10-16T08:51:02 +05:00",
-    "latitude": 22.130659,
-    "longitude": -106.677368,
-    "tags": [
-      "sint",
-      "laborum",
-      "cillum",
-      "duis",
-      "deserunt",
-      "deserunt",
-      "laborum"
-    ],
-    "likes": [
-      1,
-      3
-    ],
-    "followers": [
-      1,
-      3
-    ],
-    "comments": [
-      {
-        "id": 0,
-        "user": 1,
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, voluptatum.",
-        "date": "2015-07-06T06:55:58 +05:00"
-      },
-      {
-        "id": 1,
-        "user": 2,
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, voluptatum.",
-        "date": "2015-07-06T06:55:58 +05:00"
-      },
-      {
-        "id": 2,
-        "user": 3,
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, voluptatum.",
-        "date": "2015-07-06T06:55:58 +05:00"
-      }
-    ]
+    "created_date": "2016-07-02T09:16:26 +05:00",
+    "update_date": "2016-07-02T09:16:26 +05:00",
+    "deleted_date": "2016-07-02T09:16:26 +05:00"
   }
 ]

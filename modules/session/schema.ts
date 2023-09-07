@@ -18,4 +18,7 @@ type SignIn {
 extend type Query {
   signIn(email: String!, password: String!): SignIn
 }
+type Mutation {
+  signOut(id: String!, accessToken: String!, idToken: String!): SignIn
+}
 `

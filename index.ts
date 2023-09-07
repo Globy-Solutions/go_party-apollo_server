@@ -32,7 +32,10 @@ const server = new ApolloServer<MyContext>({
 });
 (async () => {
   const { url } = await startStandaloneServer(server, {
-    context: async ({ req }) => ({ token: req.headers.token }),
+    context: async ({ req }) => {
+      const token = req.headers.authorization || '';
+      return { token }
+    },
     listen: { port: 4000 },
   });
 
