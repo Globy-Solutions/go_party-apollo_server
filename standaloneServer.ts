@@ -11,6 +11,7 @@ interface MyContext {
   token?: String;
 }
 
+const getAuth = (token: string | string[] | undefined) => token !== '';
 const server = new ApolloServer<MyContext>({
   typeDefs,
   resolvers,
@@ -32,10 +33,12 @@ const server = new ApolloServer<MyContext>({
 });
 (async () => {
   const { url } = await startStandaloneServer(server, {
-    context: async ({ req }) => {
-      const token = req.headers.authorization || '';
-      return { token }
-    },
+    context: async ({ req }) => ({
+      auth: getAuth(req.headers.authentication),
+      dataSources: {
+        userApi: null,
+      },
+    }),
     listen: { port: 4000 },
   });
 

@@ -22,11 +22,11 @@ type Event implements ABM {
   updated_date: Date
   deleted_date: Date
 }
-type ResponseEvent {
-  data: [Event]
-}
 extend type Query {
-  getAllEvents(isActive: Boolean): ResponseEvent
-  getEventById(id: ID!): ResponseEvent
+  getAllEvents(isActive: Boolean): [Event!]
+  getEventById(id: ID!): [Event!]
+}
+type Subscription {
+  newEvent: Event
 }
 `

@@ -15,11 +15,8 @@ type Category implements ABM {
   updated_date: Date
   deleted_date: Date
 }
-type ResponseCategory {
-  data: [Category]
-}
 extend type Query {
-  getAllCategories(isActive: Boolean): ResponseCategory
-  getCategoryById(id: ID!): ResponseCategory
+  getAllCategories(isActive: Boolean): [Category!]
+  getCategoryById(id: ID!): [Category!]
 }
 `

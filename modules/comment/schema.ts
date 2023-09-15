@@ -9,11 +9,8 @@ type Comment implements ABM {
   updated_date: Date
   deleted_date: Date
 }
-type ResponseComment {
-  data: [Comment]
-}
 extend type Query {
-  getCommentsByUser(userId: ID): ResponseComment
-  getCommentById(id: ID!): ResponseComment
+  getCommentsByUser(userId: ID): [Comment!]
+  getCommentById(id: ID!): [Comment!]
 }
 `

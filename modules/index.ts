@@ -4,6 +4,8 @@ import { default as CommentResolvers } from './comment/resolvers';
 import { default as CommentSchema } from './comment/schema';
 import { default as EventResolvers } from './event/resolvers';
 import { default as EventSchema } from './event/schema';
+import { default as HistoryResolvers } from './history/resolvers';
+import { default as HistorySchema } from './history/schema';
 import { default as SessionResolvers } from './session/resolvers';
 import { default as SessionSchema } from './session/schema';
 import { default as UserResolvers } from './user/resolvers';
@@ -19,12 +21,25 @@ const rootTypeDefs = `
   type Query {
     hello: String
   }
+  type Subscription {
+    sayHello: String
+  }
 `;
 
 const rootResolvers = {
   Query: {
     hello: () => 'Hello world!',
   },
+  Subscription: {
+    sayHello: {
+      // Example using an async generator
+      subscribe: async function* () {
+        for await (const word of ['Hello', 'Bonjour', 'Ciao']) {
+          yield { hello: word };
+        }
+      },
+    }
+  }
 };
 
 export const typeDefs = [
@@ -33,7 +48,8 @@ export const typeDefs = [
   UserSchema,
   CategorySchema,
   EventSchema,
-  CommentSchema
+  CommentSchema,
+  HistorySchema
 ]
 export const resolvers = [
   rootResolvers,
@@ -41,5 +57,6 @@ export const resolvers = [
   UserResolvers,
   CategoryResolvers,
   EventResolvers,
-  CommentResolvers
+  CommentResolvers,
+  HistoryResolvers
 ]

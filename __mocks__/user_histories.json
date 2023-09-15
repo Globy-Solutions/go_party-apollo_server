@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "events": [
+      { "categoryId": 1, "id": 0 },
+      { "categoryId": 1, "id": 1 }
+    ],
+    "likes": [
+      { "categoryId": 1, "id": 0 },
+      { "categoryId": 1, "id": 1 }
+    ],
+    "comments": [
+      { "categoryId": 1, "id": 0, "text": "Lorem ipsum" },
+      { "categoryId": 1, "id": 1, "text": "Lorem ipsum" }
+    ],
+    "followeds": [1,2],
+    "followers": [1,2]
+  }
+]
