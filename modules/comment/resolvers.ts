@@ -1,5 +1,5 @@
+import casual from 'casual'
 const bd_comments = require('../../__mocks__/comments.json')
-const bd_users = require('../../__mocks__/users.json')
 
 export default {
   Query: {
@@ -19,6 +19,15 @@ export default {
     }
   },
   Comment: {
-    userId: async ({ userId }: { userId: string }) => await bd_users.find((user: any) => user.id == userId)
+    /* userId: async ({ userId }: { userId: string }) => await bd_users.find((user: any) => user.id == userId) */
+    userId: async () => ({
+      id: casual.uuid,
+      name: casual.name,
+      email: casual.email,
+      password: casual.password,
+      rol: casual.integer(1, 3),
+      phone: casual.phone,
+      avatar: 'https://i.pravatar.cc/100',
+    })
   }
 }

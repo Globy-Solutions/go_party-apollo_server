@@ -6,12 +6,20 @@ type User implements ABM {
   phone: String
   email: String!
   password: String!
+  rol: Rol!
   created_date: Date
   updated_date: Date
   deleted_date: Date
 }
+type UsersResponse implements Response {
+  notification: Notification
+  data: [User]
+}
+type UserResponse implements Response {
+  notification: Notification
+  data: User
+}
 extend type Query {
-  getAllUsers: [User]
-  getUserById(id: ID!): User
+  getUserById(id: ID!): UserResponse
 }
 `

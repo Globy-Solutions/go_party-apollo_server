@@ -18,13 +18,21 @@ type Event implements ABM {
   likes: [User]
   goinTo: [User]
   comments: [Comment]
-  created_date: Date
+  created_date: Date!
   updated_date: Date
   deleted_date: Date
 }
+type EventsResponse implements Response {
+  notification: Notification
+  data: [Event]
+}
+type EventResponse implements Response {
+  notification: Notification
+  data: Event
+}
 extend type Query {
-  getAllEvents(isActive: Boolean): [Event!]
-  getEventById(id: ID!): [Event!]
+  getAllEvents(isActive: Boolean): EventsResponse
+  getEventById(id: ID!): EventResponse
 }
 type Subscription {
   newEvent: Event

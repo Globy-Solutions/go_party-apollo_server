@@ -9,7 +9,11 @@ type History implements ABM {
   updated_date: Date
   deleted_date: Date
 }
+type HistoryResponse implements Response {
+  notification: Notification
+  data: History
+}
 extend type Query {
-  history(id: ID!): History!
+  history(id: ID!): HistoryResponse
 }
 `

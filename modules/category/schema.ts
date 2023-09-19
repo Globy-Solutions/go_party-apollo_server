@@ -15,8 +15,16 @@ type Category implements ABM {
   updated_date: Date
   deleted_date: Date
 }
+type CategoriesResponse implements Response {
+  notification: Notification
+  data: [Category]
+}
+type CategoryResponse implements Response {
+  notification: Notification
+  data: Category
+}
 extend type Query {
-  getAllCategories(isActive: Boolean): [Category!]
-  getCategoryById(id: ID!): [Category!]
+  getAllCategories(isActive: Boolean): CategoriesResponse!
+  getCategoryById(id: ID!): CategoryResponse!
 }
 `

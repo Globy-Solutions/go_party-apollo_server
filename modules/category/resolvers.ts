@@ -1,3 +1,5 @@
+import { notification } from '..'
+
 const categories = require('../../__mocks__/categories.json')
 
 export default {
@@ -7,16 +9,11 @@ export default {
       if (isActive) {
         data = await categories.filter((category: any) => category.isActive)
       } else { data = await categories }
-      return { data }
+      return { data, notification: notification.success }
     },
-    getCategoryById: async (_: unknown, { id }: { id: string }, contextValue: any) => {
-      console.log({ id, contextValue });
+    getCategoryById: async (_: unknown, { id }: { id: string }) => {
       let category: any = await categories.find((category: { id: string | number }) => category.id == id)
-      let data: any[] = []
-      if (category) {
-        data.push(category)
-      }
-      return { data }
+      return { data: category, notification: category ? notification.error : notification.success }
     }
   }
 }

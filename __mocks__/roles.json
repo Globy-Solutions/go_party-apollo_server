@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "User",
+    "isActive": true,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis se"
+  },
+  {
+    "id": 2,
+    "name": "Leader",
+    "isActive": true,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis se"
+  },
+  {
+    "id": 3,
+    "name": "Organizator",
+    "isActive": true,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis se"
+  }
+]
