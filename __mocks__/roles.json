@@ -16,5 +16,11 @@
     "name": "Organizator",
     "isActive": true,
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis se"
+  },
+  {
+    "id": 4,
+    "name": "Owner",
+    "isActive": true,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis se"
   }
 ]

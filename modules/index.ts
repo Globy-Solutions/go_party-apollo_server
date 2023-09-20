@@ -10,6 +10,8 @@ import { default as RolResolvers } from './rol/resolvers';
 import { default as RolSchema } from './rol/schema';
 import { default as SessionResolvers } from './session/resolvers';
 import { default as SessionSchema } from './session/schema';
+import { default as TeamResolvers } from './team/resolvers';
+import { default as TeamSchema } from './team/schema';
 import { default as UserResolvers } from './user/resolvers';
 import { default as UserSchema } from './user/schema';
 
@@ -80,7 +82,8 @@ export const typeDefs = [
   CategorySchema,
   EventSchema,
   CommentSchema,
-  HistorySchema
+  HistorySchema,
+  TeamSchema
 ]
 export const resolvers = [
   rootResolvers,
@@ -90,5 +93,6 @@ export const resolvers = [
   CategoryResolvers,
   EventResolvers,
   CommentResolvers,
-  HistoryResolvers
+  HistoryResolvers,
+  TeamResolvers
 ]

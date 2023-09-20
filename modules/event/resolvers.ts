@@ -1,22 +1,13 @@
 import casual from 'casual';
 import { PubSub } from 'graphql-subscriptions';
 import { notification } from '..';
+import { comment } from '../comment/resolvers';
+import { user } from '../user/resolvers';
 
-const events = require('../../__mocks__/events.json')
 const logged = require('../../__mocks__/events_logged.json')
-
 const pubsub = new PubSub()
-const user = (id: number) => ({
-  id,
-  name: casual.name,
-  avatar: 'https://i.pravatar.cc/100',
-})
-const comment = (id: number) => ({
-  id: casual.uuid,
-  userId: id,
-  text: casual.description
-})
-const event = () => ({
+
+export const event = () => ({
   id: casual.uuid,
   title: casual.title,
   name: casual.name,
@@ -37,18 +28,26 @@ const event = () => ({
   likes: casual.array_of_digits(3),
   goinTo: casual.array_of_digits(3),
   comments: casual.array_of_digits(3),
+  created_by: user(casual.integer(1, 3)).id,
   created_date: casual.date(),
   updated_date: casual.date()
 })
+
 export default {
   Query: {
-    getAllEvents: async () => {
-      const data = Array.from({ length: 3 }, () => event());
-      return { data, notification: notification.success }
+    getAllEvents: async (_: unknown, { isActive, by }: { isActive?: boolean; by?: string }) => {
+      console.log({ isActive, by });
+      const events = Array.from({ length: 3 }, () => event());
+      if (by) {
+        const filtered = logged.filter((event: any) => event.created_by == by)
+        return { data: filtered, notification: notification.success }
+      }
+      return { data: events, notification: notification.success }
     },
     getEventById: async (_: unknown, { id }: { id: string }) => {
+      console.log('getEventById');
       let eventFound = {}
-      if (id != null || id != undefined) {
+      if (id) {
         eventFound = event()
       }
       return { data: eventFound, notification: Object.keys(eventFound).length < 0 ? notification.error : notification.success }
@@ -87,7 +86,7 @@ export default {
   Subscription: {
     newEvent() {
       pubsub.publish('EVENT_PUBLISHED', {});
-      return events[0]
+      return null
     }
   }
 }
