@@ -1,7 +1,7 @@
 import casual from 'casual'
 import { notification } from '..'
 const roles = require('../../__mocks__/roles.json')
-export const user = (id: string|number) => ({
+export const user = (id: number) => ({
   id,
   name: casual.name,
   email: casual.email,

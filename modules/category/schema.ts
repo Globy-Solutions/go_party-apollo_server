@@ -1,9 +1,7 @@
 export default `
 enum AllowedCategories {
-  Events
-  Places
-  Other
-  Another
+  events
+  places
 }
 type Category implements ABM {
   id: ID!

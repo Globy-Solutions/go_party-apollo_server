@@ -26,6 +26,6 @@ export default {
     }
   },
   Comment: {
-    userId: async ({ userId }: { userId: string }) => user(userId),
+    userId: async ({ userId }: { userId: number }) => user(userId),
   }
 }
