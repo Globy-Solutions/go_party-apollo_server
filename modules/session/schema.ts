@@ -6,10 +6,6 @@ type Session {
   refreshToken: String!
   tokenType: String!
 }
-type Notification {
-  type: String!
-  message: String!
-}
 type SignIn {
   data: User
   session: Session

@@ -9,9 +9,8 @@ type Category implements ABM {
   isActive: Boolean
   picture: String
   description: String
-  created_date: Date
+  created_date: Date!
   updated_date: Date
-  deleted_date: Date
 }
 type CategoriesResponse implements Response {
   notification: Notification
@@ -24,5 +23,9 @@ type CategoryResponse implements Response {
 extend type Query {
   getAllCategories(isActive: Boolean): CategoriesResponse!
   getCategoryById(id: ID!): CategoryResponse!
+}
+input CategoryInput {
+  name: AllowedCategories
+  isActive: Boolean
 }
 `

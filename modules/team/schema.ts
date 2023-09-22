@@ -6,9 +6,8 @@ type Team implements ABM {
   isActive: Boolean
   created_by: ID!
   events: [Event]
-  created_date: Date
+  created_date: Date!
   updated_date: Date
-  deleted_date: Date
 }
 type TeamsResponse implements Response {
   notification: Notification

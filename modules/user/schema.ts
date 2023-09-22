@@ -7,9 +7,8 @@ type User implements ABM {
   email: String!
   password: String!
   rol: Rol!
-  created_date: Date
+  created_date: Date!
   updated_date: Date
-  deleted_date: Date
 }
 type UsersResponse implements Response {
   notification: Notification

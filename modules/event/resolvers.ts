@@ -4,6 +4,8 @@ import { notification } from '..';
 import { comment } from '../comment/resolvers';
 import { user } from '../user/resolvers';
 
+import type EventProps from '../../types/events';
+
 const logged = require('../../__mocks__/events_logged.json')
 const pubsub = new PubSub()
 
@@ -81,6 +83,18 @@ export default {
         return resp
       }
       return comments.map(() => ({}))
+    }
+  },
+  Mutation: {
+    createEvent: async (_: unknown,
+      { input }: { input: EventProps },
+      { auth }: { auth: boolean }
+    ) => {
+      input.id = casual.uuid
+      input.created_date = casual.date()
+      input.updated_date = casual.date()
+      console.log(input);
+      return auth ? notification.success : notification.error
     }
   },
   Subscription: {

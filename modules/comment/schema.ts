@@ -5,9 +5,8 @@ type Comment implements ABM {
   categoryId: Category
   text: String
   isAvailable: Int
-  created_date: Date
+  created_date: Date!
   updated_date: Date
-  deleted_date: Date
 }
 extend type Query {
   getCommentsByUser(userId: ID): [Comment!]

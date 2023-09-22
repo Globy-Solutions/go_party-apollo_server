@@ -5,9 +5,8 @@ type History implements ABM {
   comments: [Comment]
   followeds: [User]
   followers: [User]
-  created_date: Date
+  created_date: Date!
   updated_date: Date
-  deleted_date: Date
 }
 type HistoryResponse implements Response {
   notification: Notification

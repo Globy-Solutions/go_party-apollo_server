@@ -39,19 +39,22 @@ export const notification: NotificationType = {
 const rootTypeDefs = `
   scalar Date
   interface ABM {
-    created_date: Date
+    created_date: Date!
     updated_date: Date
-    deleted_date: Date
   }
   type Query {
     hello: String
   }
-  interface Notification {
+  interface NotificationInt {
     type: String
     message: String
   }
   interface Response {
     notification: Notification
+  }
+  type Notification implements NotificationInt {
+    type: String!
+    message: String!
   }
   type Subscription {
     sayHello: String

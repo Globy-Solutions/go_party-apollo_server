@@ -1,5 +1,23 @@
 export default `
-type Event implements ABM {
+interface EventInt implements ABM{
+  title: String!
+  name: String!
+  isActive: Boolean
+  categoryId: Category!
+  image: Int
+  pictures: [String]
+  videos: [String]
+  price: Float
+  address: String
+  about: String
+  latitude: Float
+  longitude: Float
+  tags: [String]
+  created_by: ID!
+  created_date: Date!
+  updated_date: Date
+}
+type Event implements EventInt & ABM {
   id: ID!
   title: String!
   name: String!
@@ -14,14 +32,13 @@ type Event implements ABM {
   latitude: Float
   longitude: Float
   tags: [String]
+  created_by: ID!
   followers: [User]
   likes: [User]
   goinTo: [User]
   comments: [Comment]
-  created_by: ID!
   created_date: Date!
   updated_date: Date
-  deleted_date: Date
 }
 type EventsResponse implements Response {
   notification: Notification
@@ -34,6 +51,26 @@ type EventResponse implements Response {
 extend type Query {
   getAllEvents(isActive: Boolean, by: ID): EventsResponse
   getEventById(id: ID!): EventResponse
+}
+input EventInput {
+  title: String!
+  name: String!
+  isActive: Boolean
+  categoryId: Int!
+  pictures: [String]
+  videos: [String]
+  price: Float
+  address: String
+  about: String
+  latitude: Float
+  longitude: Float
+  tags: [String]
+  created_by: Int!
+  created_date: Date
+  updated_date: Date
+}
+extend type Mutation {
+  createEvent(input: EventInput): Notification
 }
 type Subscription {
   newEvent: Event
