@@ -1,7 +1,6 @@
 export default `
 type History implements ABM {
-  id: ID!
-  events: [Event!]
+  events: [Event]
   comments: [Comment]
   followeds: [User]
   followers: [User]
@@ -13,6 +12,6 @@ type HistoryResponse implements Response {
   data: History
 }
 extend type Query {
-  history(id: ID!): HistoryResponse
+  history(userId: ID!): HistoryResponse
 }
 `

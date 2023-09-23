@@ -1,7 +1,6 @@
 ```
 fragment Data on Category {
-  id
-  name
+  id isActive name picture description
 }
 query getAllCategories($isActive: Boolean) {
   getAllCategories(isActive: $isActive) {
@@ -14,5 +13,4 @@ query getAllCategories($isActive: Boolean) {
     }
   }
 }
-
 ```

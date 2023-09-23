@@ -18,7 +18,7 @@ export const user = (id?: number, email?: string) => ({
 })
 export default {
   Query: {
-    getUserById: async (_: any, { id }: { id: number }, { auth }: any) => {
+    getUserById: async (_: any, { id }: { id: number }, { auth }: { auth?: boolean }) => {
       let data: any = null
       if (auth) {
         data = user(id)

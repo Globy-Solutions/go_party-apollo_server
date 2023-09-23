@@ -38,16 +38,14 @@ export const event = () => ({
 export default {
   Query: {
     getAllEvents: async (_: unknown, { isActive, by }: { isActive?: boolean; by?: string }) => {
-      console.log({ isActive, by });
       const events = Array.from({ length: 3 }, () => event());
       if (by) {
-        const filtered = logged.filter((event: any) => event.created_by == by)
+        const filtered = logged.filter((event: any) => event.created_by == by && event.isActive == isActive)
         return { data: filtered, notification: notification.success }
       }
       return { data: events, notification: notification.success }
     },
     getEventById: async (_: unknown, { id }: { id: string }) => {
-      console.log('getEventById');
       let eventFound = {}
       if (id) {
         eventFound = event()
@@ -56,28 +54,28 @@ export default {
     }
   },
   Event: {
-    followers: async ({ followers }: { followers: number[] }, _args: any, { auth }: any) => {
+    followers: async ({ followers }: { followers: number[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
         const resp = followers.map((_: any, id: number) => user(id))
         return resp
       }
       return followers.map(() => ({}))
     },
-    likes: async ({ likes }: { likes: number[] }, _args: any, { auth }: any) => {
+    likes: async ({ likes }: { likes: number[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
         const resp = likes.map((_: any, id: number) => user(id))
         return resp
       }
       return likes.map(() => ({}))
     },
-    goinTo: async ({ goinTo }: { goinTo: number[] }, _args: any, { auth }: any) => {
+    goinTo: async ({ goinTo }: { goinTo: number[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
         const resp = goinTo.map((_: any, id: number) => user(id))
         return resp
       }
       return goinTo.map(() => ({}))
     },
-    comments: async ({ comments }: { comments: number[] }, _args: any, { auth }: any) => {
+    comments: async ({ comments }: { comments: number[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
         const resp = comments.map((_: any, id: number) => comment(id))
         return resp

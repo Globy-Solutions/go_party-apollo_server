@@ -2,9 +2,9 @@ import casual from 'casual';
 import { notification } from '..';
 import { user } from '../user/resolvers';
 
-export const comment = (id: number) => ({
+export const comment = (id?: number) => ({
   id: casual.integer(1, 3),
-  userId: id,
+  userId: id ?? casual.integer(1, 3),
   categoryId: casual.integer(1, 3),
   text: casual.description,
   isActive: casual.boolean,

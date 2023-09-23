@@ -7,14 +7,9 @@ query signIn($email: String!, $password: String!) {
       name
       email
       phone
-      rol {
-        id name
-      }
+      rol { id name }
     }
-    notification {
-      type
-      message
-    }
+    notification { type message }
     session {
       accessToken
       idToken

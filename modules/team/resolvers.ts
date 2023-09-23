@@ -25,7 +25,7 @@ export default {
       const teams = Array.from({ length: 3 }, () => team());
       return { data: teams, notification: notification.success }
     },
-    getTeamById: async (_: any, { id }: { id: string }, { auth }: any) => {
+    getTeamById: async (_: any, { id }: { id: string }, { auth }: { auth?: boolean }) => {
       let data: any = null
       if (auth) {
         data = {
