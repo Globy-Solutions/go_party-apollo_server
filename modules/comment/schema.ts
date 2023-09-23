@@ -4,7 +4,7 @@ type Comment implements ABM {
   userId: User
   categoryId: Category
   text: String
-  isAvailable: Int
+  isActive: Int
   created_date: Date!
   updated_date: Date
 }

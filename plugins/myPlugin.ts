@@ -1,20 +1,31 @@
-export const myPlugin = {
-  // Fires whenever a GraphQL request is received from a client.
-  async requestDidStart(requestContext: { request: { query: string; }; }) {
-    console.log('Request started! Query:\n' + requestContext.request.query);
-
+export default {
+  async requestDidStart() {
     return {
-      // Fires whenever Apollo Server will parse a GraphQL
-      // request to create its associated document AST.
-      async parsingDidStart(requestContext: any) {
-        console.log('Parsing started!');
+      async parsingDidStart() {
+        return async (err) => {
+          if (err) {
+            console.error(err)
+          }
+        }
       },
-
-      // Fires whenever Apollo Server will validate a
-      // request's document AST against your GraphQL schema.
-      async validationDidStart(requestContext: any) {
-        console.log('Validation started!');
+      async validationDidStart() {
+        // This end hook is unique in that it can receive an array of errors,
+        // which will contain every validation error that occurred.
+        return async (errs) => {
+          if (errs) {
+            errs.forEach((err) => console.error(err))
+          }
+        }
       },
-    };
-  },
-};
+      async executionDidStart() {
+        return {
+          async executionDidEnd(err) {
+            if (err) {
+              console.error(err)
+            }
+          }
+        }
+      }
+    }
+  }
+}

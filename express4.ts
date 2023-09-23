@@ -1,6 +1,8 @@
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { ApolloServerPluginUsageReporting } from '@apollo/server/plugin/usageReporting';
+
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -10,6 +12,7 @@ import { createServer } from 'http';
 import { WebSocketServer } from 'ws';
 
 import { resolvers, typeDefs } from './modules';
+import { myPlugin } from './plugins/myPlugin';
 
 // Create the schema, which will be used separately by ApolloServer and
 // the WebSocket server.
@@ -24,10 +27,10 @@ const PORT = 4000;
 // Create our WebSocket server using the HTTP server we just set up.
 const wsServer = new WebSocketServer({
   server: httpServer,
-  path: '/subscriptions',
-});
+  path: '/subscriptions'
+})
 // Save the returned server's info so we can shutdown this server later
-const serverCleanup = useServer({ schema }, wsServer);
+const serverCleanup = useServer({ schema }, wsServer)
 
 // Set up ApolloServer.
 const server = new ApolloServer({
@@ -35,18 +38,34 @@ const server = new ApolloServer({
   plugins: [
     // Proper shutdown for the HTTP server.
     ApolloServerPluginDrainHttpServer({ httpServer }),
-
     // Proper shutdown for the WebSocket server.
     {
       async serverWillStart() {
         return {
           async drainServer() {
-            await serverCleanup.dispose();
-          },
-        };
-      },
+            await serverCleanup.dispose()
+          }
+        }
+      }
     },
-  ],
+    myPlugin,
+    ApolloServerPluginUsageReporting({
+      generateClientInfo: ({ request }) => {
+        const headers = request.http && request.http.headers;
+        if (headers) {
+          return {
+            clientName: headers['apollographql-client-name'],
+            clientVersion: headers['apollographql-client-version'],
+          };
+        } else {
+          return {
+            clientName: 'Unknown Client',
+            clientVersion: 'Unversioned',
+          };
+        }
+      },
+    }),
+  ]
 });
 (async () => {
   await server.start();
@@ -54,6 +73,6 @@ const server = new ApolloServer({
 
   // Now that our HTTP server is fully set up, we can listen to it.
   httpServer.listen(PORT, () => {
-    console.log(`Server is now running on http://localhost:${PORT}/graphql`);
-  });
+    console.log(`Server is now running on http://localhost:${PORT}/graphql`)
+  })
 })()

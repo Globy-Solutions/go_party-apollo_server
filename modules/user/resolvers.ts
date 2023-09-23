@@ -1,14 +1,20 @@
 import casual from 'casual'
 import { notification } from '..'
 const roles = require('../../__mocks__/roles.json')
-export const user = (id: number) => ({
-  id,
+export const user = (id?: number, email?: string) => ({
+  id: id || casual.integer(1, 100),
   name: casual.name,
-  email: casual.email,
+  email: email || casual.email,
   // rol: casual.integer(1, 4),
   rol: 3,
   phone: casual.phone,
-  avatar: 'https://i.pravatar.cc/100',
+  avatar: casual.random_element([
+    'https://robohash.org/7TQ.png',
+    'https://robohash.org/MLS.png',
+    'https://robohash.org/GBA.png',
+    'https://robohash.org/5JZ.png',
+    'https://robohash.org/NIA.png'
+  ]),
 })
 export default {
   Query: {

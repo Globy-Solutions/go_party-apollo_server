@@ -7,7 +7,7 @@ export const comment = (id: number) => ({
   userId: id,
   categoryId: casual.integer(1, 3),
   text: casual.description,
-  isAvailable: casual.boolean,
+  isActive: casual.boolean,
   created_date: casual.date(),
 })
 const comments = Array.from({ length: 5 }, () => comment(casual.integer(1, 3)))

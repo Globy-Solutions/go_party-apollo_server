@@ -5,7 +5,7 @@ import CategoryProps from './category-props'
 
 export const category = () => ({
   id: casual.integer(1, 3),
-  name: casual.title,
+  name: casual.random_element(['events']),
   isActive: casual.boolean,
   picture: 'https://loremflickr.com/320/240/night,party/all',
   description: casual.description,
@@ -16,15 +16,15 @@ export const category = () => ({
 
 export default {
   Query: {
-    getAllCategories: async (_: unknown, { isActive }: { isActive?: boolean }) => {
+    getAllCategories: async (_: unknown, { isActive }: { isActive?: CategoryProps['isActive'] }) => {
       let data: CategoryProps[] = []
       const categories: CategoryProps[] = Array.from({ length: 3 }, () => category());
       if (isActive) {
-        data = categories.filter((category: any) => category.isActive)
+        data = categories.filter((category: CategoryProps) => category.isActive)
       } else { data = categories }
       return { data, notification: notification.success }
     },
-    getCategoryById: async (_: unknown, { id }: { id: string }) => {
+    getCategoryById: async (_: unknown, { id }: { id: CategoryProps['id'] }) => {
       return { data: category(), notification: notification.success }
     }
   }

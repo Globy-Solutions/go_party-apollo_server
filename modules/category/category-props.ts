@@ -2,13 +2,16 @@
 
 import type { ABM } from "../../types"
 
+enum AllowedCategories {
+  events,
+  places
+}
 type CategoryProps = ABM & {
   id: number
-  name: string
+  name: AllowedCategories
   picture?: string
-  created_by: number
   description: string
-  isAvailable?: boolean
+  isActive?: boolean
 }
 
 export default CategoryProps

@@ -1,5 +1,6 @@
 import casual from 'casual';
 import { notification } from '..';
+import { user } from '../user/resolvers';
 
 const testPassword = '123456';
 export default {
@@ -33,14 +34,6 @@ export default {
       }) : null
     ,
     data: async (_parent: any, _args: any, _context: any, { variableValues: { password, email } }: any) =>
-      password == testPassword ? ({
-        email,
-        id: casual.integer(1, 5),
-        name: casual.name,
-        password: casual.password,
-        rol: casual.integer(1, 3),
-        phone: casual.phone,
-        avatar: 'https://i.pravatar.cc/100',
-      }) : null
+      password == testPassword ? user() : null
   }
 }
