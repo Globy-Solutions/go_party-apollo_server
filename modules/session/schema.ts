@@ -11,10 +11,13 @@ type SignIn {
   session: Session
   notification: Notification
 }
+type SignOut {
+  notification: Notification
+}
 extend type Query {
   signIn(email: String!, password: String!): SignIn
 }
 type Mutation {
-  signOut(id: String!, accessToken: String!, idToken: String!): SignIn
+  signOut(id: String!, idToken: String!): SignOut
 }
 `

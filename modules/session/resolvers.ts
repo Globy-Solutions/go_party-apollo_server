@@ -2,7 +2,7 @@ import casual from 'casual';
 import { notification } from '..';
 import { user } from '../user/resolvers';
 
-const testPassword: string = '123456';
+const testPassword: string = '123';
 export default {
   Query: {
     signIn: async (_: any, { password }: { password: string }) => ({ notification: password === testPassword ? notification.success : notification.error })
@@ -20,10 +20,7 @@ export default {
       }) : null
   },
   Mutation: {
-    signOut: async (_: any, { id, accessToken, idToken }:
-      { id: string, accessToken: string, idToken: string }) => {
-      console.log('signOut', id, accessToken, idToken);
-      return { notification: { type: 'success', message: 'SignOut successfully' } }
-    }
+    signOut: async (_: any, { id, idToken }:
+      { id: string, accessToken: string, idToken: string }) => ({ notification: notification.info })
   }
 }
