@@ -85,14 +85,17 @@ export default {
   },
   Mutation: {
     createEvent: async (_: unknown,
-      { input }: { input: EventProps },
+      { input }: { input: Partial<EventProps> },
       { auth }: { auth: boolean }
     ) => {
-      input.id = casual.uuid
-      input.created_date = casual.date()
-      input.updated_date = casual.date()
-      console.log(input);
-      return auth ? notification.success : notification.error
+      console.log('createEvent', input);
+      if (auth) {
+        input.id = casual.uuid
+        input.created_date = casual.date()
+        input.updated_date = casual.date()
+        return { data: input, notification: notification.success }
+      }
+      return { notification: notification.warning }
     }
   },
   Subscription: {

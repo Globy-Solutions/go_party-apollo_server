@@ -70,7 +70,7 @@ input EventInput {
   updated_date: Date
 }
 extend type Mutation {
-  createEvent(input: EventInput): Notification
+  createEvent(input: EventInput): EventResponse
 }
 type Subscription {
   newEvent: Event
