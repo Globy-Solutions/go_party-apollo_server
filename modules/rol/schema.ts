@@ -15,8 +15,8 @@ type Rol implements ABM {
   updated_date: Date
 }
 extend type Query {
-  getAllRoles(isActive: Boolean): [Rol!]
-  getRolById(id: ID!): [Rol!]
+  getAllRoles(isActive: Boolean): [Rol]
+  getRolById(id: ID!): Rol
 }
 `
 /*

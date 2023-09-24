@@ -5,8 +5,8 @@ export const user = (id?: number, email?: string) => ({
   id: id || casual.integer(1, 100),
   name: casual.name,
   email: email || casual.email,
-  // rol: casual.integer(1, 4),
-  rol: 3,
+  // rol: casual.integer(0, 4),
+  rol: 4,
   phone: casual.phone,
   avatar: casual.random_element([
     'https://robohash.org/7TQ.png',
