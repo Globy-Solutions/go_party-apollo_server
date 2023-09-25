@@ -1,9 +1,9 @@
 import casual from 'casual';
 import { notification } from '..';
 import { event } from '../event/resolvers';
+import { roles } from '../rol/resolvers';
 // import { user } from '../user/resolvers';
 
-const roles = require('../../__mocks__/roles.json')
 const team = () => ({
   id: casual.uuid,
   name: casual.title,
@@ -44,6 +44,6 @@ export default {
 
   },
   User: {
-    rol: async ({ rol }: { rol: number }) => await roles.find((availablesRoles: any) => availablesRoles.id == rol)
+    rol: async ({ rol }: { rol: number }) => await roles().find((availablesRoles: any) => availablesRoles.id == rol)
   }
 }

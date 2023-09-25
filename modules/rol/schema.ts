@@ -7,16 +7,24 @@ enum AllowedRoles {
   Owner
 }
 type Rol implements ABM {
-  id: ID!
+  id: Int!
   name: AllowedRoles
   description: String
   isActive: Boolean
   created_date: Date!
   updated_date: Date
 }
+type RolesResponse implements Response {
+  data: [Rol]
+  notification: Notification
+}
+type RolResponse implements Response {
+  data: Rol
+  notification: Notification
+}
 extend type Query {
-  getAllRoles(isActive: Boolean): [Rol]
-  getRolById(id: ID!): Rol
+  getAllRoles(isActive: Boolean): RolesResponse
+  getRolById(id: ID!): RolResponse
 }
 `
 /*

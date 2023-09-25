@@ -8,10 +8,9 @@ import type CommentProps from '../../types/comments';
 import type EventProps from '../../types/events';
 import type UserProps from '../../types/user';
 
-const logged = require('../../__mocks__/events_logged.json')
 const pubsub = new PubSub()
 
-export const event = () => ({
+export const event = (created_by?: UserProps['id']) => ({
   id: casual.uuid,
   title: casual.title,
   name: casual.name,
@@ -32,20 +31,18 @@ export const event = () => ({
   likes: casual.array_of_digits(3),
   goinTo: casual.array_of_digits(3),
   comments: casual.array_of_digits(3),
-  created_by: user(casual.uuid).id,
+  created_by: created_by ? created_by : user(casual.uuid).id,
   created_date: casual.date(),
   updated_date: casual.date()
 })
 
 export default {
   Query: {
-    getAllEvents: async (_: unknown, { isActive, by }: { isActive?: boolean; by?: string }) => {
-      const events = Array.from({ length: 3 }, () => event());
+    getAllEvents: async (_: unknown, { by }: { by?: EventProps['id'] }) => {
       if (by) {
-        const filtered = logged.filter((event: any) => event.created_by == by && event.isActive == isActive)
-        return { data: filtered, notification: notification.success }
+        return { data: Array.from({ length: 3 }, () => event(by)), notification: notification.success }
       }
-      return { data: events, notification: notification.success }
+      return { data: Array.from({ length: 3 }, () => event()), notification: notification.success }
     },
     getEventById: async (_: unknown, { id }: { id: EventProps['id'] }) => {
       let eventFound = {}

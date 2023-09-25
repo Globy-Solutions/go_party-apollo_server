@@ -15,7 +15,8 @@ export default {
   SignIn: {
     data: async (_parent: any, _args: any, _context: any, {
       variableValues: { email, password } }: VariableValuesProps
-    ) => {
+      ) => {
+      console.log('SignIn => data', { email, password });
       /*
       return users.find((u: Partial<UserProps>) => {
         if (u.password === password && u.email === email) {
@@ -28,10 +29,11 @@ export default {
       return {
         id: '7630291e-2642-4ee8-9acb-4ed89b85469f',
         name: 'Mr. Travon Goyette',
+        avatar: 'https://robohash.org/5JZ.png',
+        phone: '701-922-9793',
         email,
         rol: 1,
-        phone: '701-922-9793',
-        avatar: 'https://robohash.org/5JZ.png',
+        isActive: true,
         created_date: '2004-07-28',
         updated_date: '1991-12-16'
       }

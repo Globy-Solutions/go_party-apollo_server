@@ -2,8 +2,8 @@ import casual from 'casual'
 import { notification } from '..'
 
 import type UserProps from '../../types/user'
+import { roles } from '../rol/resolvers'
 
-const roles = require('../../__mocks__/roles.json')
 export const users = [
   {
     rol: 1,
@@ -58,6 +58,6 @@ export default {
 
   },
   User: {
-    rol: async ({ rol }: { rol: number }) => await roles.find((availablesRoles: any) => availablesRoles.id == rol)
+    rol: async ({ rol }: { rol: number }) => await roles().find((availablesRoles: any) => availablesRoles.id == rol)
   }
 }

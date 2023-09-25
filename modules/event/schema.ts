@@ -41,12 +41,12 @@ type Event implements EventInt & ABM {
   updated_date: Date
 }
 type EventsResponse implements Response {
-  notification: Notification
   data: [Event]
+  notification: Notification
 }
 type EventResponse implements Response {
-  notification: Notification
   data: Event
+  notification: Notification
 }
 extend type Query {
   getAllEvents(isActive: Boolean, by: ID): EventsResponse
