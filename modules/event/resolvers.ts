@@ -4,7 +4,9 @@ import { notification } from '..';
 import { comment } from '../comment/resolvers';
 import { user } from '../user/resolvers';
 
+import type CommentProps from '../../types/comments';
 import type EventProps from '../../types/events';
+import type UserProps from '../../types/user';
 
 const logged = require('../../__mocks__/events_logged.json')
 const pubsub = new PubSub()
@@ -30,7 +32,7 @@ export const event = () => ({
   likes: casual.array_of_digits(3),
   goinTo: casual.array_of_digits(3),
   comments: casual.array_of_digits(3),
-  created_by: user(casual.integer(1, 3)).id,
+  created_by: user(casual.uuid).id,
   created_date: casual.date(),
   updated_date: casual.date()
 })
@@ -45,7 +47,7 @@ export default {
       }
       return { data: events, notification: notification.success }
     },
-    getEventById: async (_: unknown, { id }: { id: string }) => {
+    getEventById: async (_: unknown, { id }: { id: EventProps['id'] }) => {
       let eventFound = {}
       if (id) {
         eventFound = event()
@@ -54,33 +56,29 @@ export default {
     }
   },
   Event: {
-    followers: async ({ followers }: { followers: number[] }, _args: any, { auth }: { auth?: boolean }) => {
+    followers: async ({ followers }: { followers: UserProps[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
-        const resp = followers.map((_: any, id: number) => user(id))
-        return resp
+        return followers.map(({ id }: { id: UserProps['id'] }) => user(id))
       }
-      return followers.map(() => ({}))
+      return []
     },
-    likes: async ({ likes }: { likes: number[] }, _args: any, { auth }: { auth?: boolean }) => {
+    likes: async ({ likes }: { likes: UserProps[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
-        const resp = likes.map((_: any, id: number) => user(id))
-        return resp
+        return likes.map(({ id }: { id: UserProps['id'] }) => user(id))
       }
-      return likes.map(() => ({}))
+      return []
     },
-    goinTo: async ({ goinTo }: { goinTo: number[] }, _args: any, { auth }: { auth?: boolean }) => {
+    goinTo: async ({ goinTo }: { goinTo: UserProps[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
-        const resp = goinTo.map((_: any, id: number) => user(id))
-        return resp
+        return goinTo.map(({ id }: { id: UserProps['id'] }) => user(id))
       }
-      return goinTo.map(() => ({}))
+      return []
     },
-    comments: async ({ comments }: { comments: number[] }, _args: any, { auth }: { auth?: boolean }) => {
+    comments: async ({ comments }: { comments: CommentProps[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
-        const resp = comments.map((_: any, id: number) => comment(id))
-        return resp
+        return comments.map(({ id }: { id: CommentProps['id'] }) => comment(id))
       }
-      return comments.map(() => ({}))
+      return []
     }
   },
   Mutation: {

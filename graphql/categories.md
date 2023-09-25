@@ -1,15 +1,24 @@
 ```
 fragment Data on Category {
-  id isActive name picture description
+  id name picture description isActive
 }
-query getAllCategories($isActive: Boolean) {
-  getAllCategories(isActive: $isActive) {
+query getAllCategories($isActive: Boolean, $userId: ID) {
+  getAllCategories(isActive: $isActive, by: $userId) {
     data {
       ...Data
     }
     notification {
-      type
-      message
+      type message
+    }
+  }
+}
+query getCategoryById($id: String!) {
+  getCategoryById(id: $id) {
+    data {
+      ...Data
+    }
+    notification {
+      type message
     }
   }
 }

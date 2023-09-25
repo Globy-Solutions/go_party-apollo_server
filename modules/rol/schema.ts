@@ -9,8 +9,8 @@ enum AllowedRoles {
 type Rol implements ABM {
   id: ID!
   name: AllowedRoles
-  isActive: Boolean
   description: String
+  isActive: Boolean
   created_date: Date!
   updated_date: Date
 }

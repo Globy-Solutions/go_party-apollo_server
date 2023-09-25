@@ -17,13 +17,7 @@ import { default as TeamSchema } from './team/schema';
 import { default as UserResolvers } from './user/resolvers';
 import { default as UserSchema } from './user/schema';
 
-import type { AllowedNotification, Notification } from '../types';
-
-type NotificationType = {
-  [key in AllowedNotification]: Notification
-}
-
-export const notification: NotificationType = {
+export const notification = {
   error: {
     type: 'error', message: 'Not found'
   },
@@ -41,6 +35,7 @@ export const notification: NotificationType = {
 const rootTypeDefs = `
   scalar Date
   interface ABM {
+    isActive: Boolean
     created_date: Date!
     updated_date: Date
   }

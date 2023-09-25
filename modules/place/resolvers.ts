@@ -1,6 +1,7 @@
 import casual from 'casual';
 import { PubSub } from 'graphql-subscriptions';
 import { notification } from '..';
+import { category } from '../category/resolvers';
 import { user } from '../user/resolvers';
 
 import type PlaceProps from '../../types/place';
@@ -15,6 +16,7 @@ const place = (id?: PlaceProps['id']) => ({
   address: casual.address,
   latitude: casual.latitude,
   longitude: casual.longitude,
+  category: category().id,
   created_by: user().id,
   created_date: casual.date(),
   updated_date: casual.date()

@@ -3,12 +3,13 @@ type Place implements ABM {
   id: ID!
   name: String!
   description: String
-  isActive: Boolean
   image: String
   address: String
   latitude: Float
   longitude: Float
+  category: ID!
   created_by: ID!
+  isActive: Boolean
   created_date: Date!
   updated_date: Date
 }
@@ -27,13 +28,14 @@ extend type Query {
 input PlaceInput {
   name: String!
   description: String
-  isActive: Boolean
   image: String
   address: String
   latitude: Float
   longitude: Float
+  category: ID!
   created_by: ID!
-  created_date: Date
+  isActive: Boolean
+  created_date: Date!
   updated_date: Date
 }
 extend type Mutation {

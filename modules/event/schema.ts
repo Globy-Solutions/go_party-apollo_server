@@ -2,7 +2,6 @@ export default `
 interface EventInt implements ABM{
   title: String!
   name: String!
-  isActive: Boolean
   categoryId: Category!
   image: Int
   pictures: [String]
@@ -14,6 +13,7 @@ interface EventInt implements ABM{
   longitude: Float
   tags: [String]
   created_by: ID!
+  isActive: Boolean
   created_date: Date!
   updated_date: Date
 }
@@ -21,7 +21,6 @@ type Event implements EventInt & ABM {
   id: ID!
   title: String!
   name: String!
-  isActive: Boolean
   categoryId: Category!
   image: Int
   pictures: [String]
@@ -37,6 +36,7 @@ type Event implements EventInt & ABM {
   likes: [User]
   goinTo: [User]
   comments: [Comment]
+  isActive: Boolean
   created_date: Date!
   updated_date: Date
 }
@@ -55,7 +55,6 @@ extend type Query {
 input EventInput {
   title: String!
   name: String!
-  isActive: Boolean
   categoryId: Int!
   pictures: [String]
   videos: [String]
@@ -66,7 +65,8 @@ input EventInput {
   longitude: Float
   tags: [String]
   created_by: Int!
-  created_date: Date
+  isActive: Boolean
+  created_date: Date!
   updated_date: Date
 }
 extend type Mutation {

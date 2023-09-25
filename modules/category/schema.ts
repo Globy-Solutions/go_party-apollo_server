@@ -6,9 +6,9 @@ enum AllowedCategories {
 type Category implements ABM {
   id: ID!
   name: AllowedCategories
-  isActive: Boolean
   picture: String
   description: String
+  isActive: Boolean
   created_date: Date!
   updated_date: Date
 }
@@ -21,8 +21,8 @@ type CategoryResponse implements Response {
   data: Category
 }
 extend type Query {
-  getAllCategories(isActive: Boolean): CategoriesResponse!
-  getCategoryById(id: ID!): CategoryResponse!
+  getAllCategories(isActive: Boolean, by: ID): CategoriesResponse!
+  getCategoryById(id: String!): CategoryResponse!
 }
 input CategoryInput {
   name: AllowedCategories

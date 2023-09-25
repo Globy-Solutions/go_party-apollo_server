@@ -1,29 +1,40 @@
 import casual from 'casual'
 import { notification } from '..'
+
+import type UserProps from '../../types/user'
+
 const roles = require('../../__mocks__/roles.json')
-const users = [
+export const users = [
   {
     rol: 1,
-    email: 'rrpp@vistaprint.com',
+    password: '123',
+    email: 'rrpp@go_party.fun',
   },
   {
     rol: 2,
-    email: 'leader@vistaprint.com',
+    password: '123',
+    email: 'leader@go_party.fun',
   },
   {
     rol: 3,
-    email: 'organizator@vistaprint.com',
+    password: '123',
+    email: 'organizator@go_party.fun',
   },
   {
     rol: 4,
-    email: 'owner@vistaprint.com',
+    password: '123',
+    email: 'owner@go_party.fun',
   }
 ]
-export const user = (id?: number, email?: string) => ({
-  id: id || casual.integer(1, 100),
+export const user = (
+  id?: UserProps['id'],
+  email?: UserProps['email']
+) => ({
+  id: id || casual.uuid,
   name: casual.name,
   email: email || casual.email,
-  rol: email ? users.find((user: any) => user.email === email)?.rol || 0 : 0,
+  rol: email ? users.find(
+    (user) => user.email === email)?.rol || 0 : 0,
   phone: casual.phone,
   avatar: casual.random_element([
     'https://robohash.org/7TQ.png',
@@ -32,10 +43,12 @@ export const user = (id?: number, email?: string) => ({
     'https://robohash.org/5JZ.png',
     'https://robohash.org/NIA.png'
   ]),
+  created_date: casual.date('YYYY-MM-DD'),
+  updated_date: casual.date('YYYY-MM-DD')
 })
 export default {
   Query: {
-    getUserById: async (_: any, { id }: { id: number }, { auth }: { auth?: boolean }) => {
+    getUserById: async (_: any, { id }: { id: UserProps['id'] }, { auth }: { auth?: boolean }) => {
       let data: any = null
       if (auth) {
         data = user(id)

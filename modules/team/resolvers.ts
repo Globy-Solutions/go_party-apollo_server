@@ -1,13 +1,13 @@
 import casual from 'casual';
 import { notification } from '..';
 import { event } from '../event/resolvers';
-import { user } from '../user/resolvers';
+// import { user } from '../user/resolvers';
 
 const roles = require('../../__mocks__/roles.json')
 const team = () => ({
   id: casual.uuid,
   name: casual.title,
-  members: Array.from({ length: 3 }, () => user(casual.integer(1, 3))),
+  members: [], // Array.from({ length: 3 }, () => user(casual.integer(1, 3))),
   isActive: casual.boolean,
   events: Array.from({ length: 3 }, () => {
     const { id, title, isActive } = event()

@@ -4,6 +4,7 @@ type History implements ABM {
   comments: [Comment]
   followeds: [User]
   followers: [User]
+  isActive: Boolean
   created_date: Date!
   updated_date: Date
 }
