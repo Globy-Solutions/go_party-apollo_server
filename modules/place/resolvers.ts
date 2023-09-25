@@ -16,8 +16,8 @@ const place = (id?: PlaceProps['id']) => ({
   address: casual.address,
   latitude: casual.latitude,
   longitude: casual.longitude,
-  category: category().id,
-  created_by: user().id,
+  category: category({ id }).id,
+  created_by: user({}).id,
   created_date: casual.date(),
   updated_date: casual.date()
 })

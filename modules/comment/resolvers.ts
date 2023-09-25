@@ -1,6 +1,6 @@
 import casual from 'casual';
 import { notification } from '..';
-import { user } from '../user/resolvers';
+import { UserRegisterd, user } from '../user/resolvers';
 
 import type CommentProps from '../../types/comments';
 import type UserProps from '../../types/user';
@@ -19,7 +19,7 @@ export default {
     getCommentsByUser: async (_: unknown, { userId }: { userId?: UserProps['id'] }, { token }: any) => {
       if (userId && token) {
         const commentsByUser = comments.filter((comment: any) => comment.userId == userId)
-      return { data: commentsByUser, notification: notification.success }
+        return { data: commentsByUser, notification: notification.success }
       }
       return { data: [], notification: notification.error }
     },
@@ -29,6 +29,6 @@ export default {
     }
   },
   Comment: {
-    userId: async ({ userId }: { userId: UserProps['id'] }) => user(userId),
+    userId: async ({ userId }: { userId: UserRegisterd['id'] }) => user({ id: userId }),
   }
 }

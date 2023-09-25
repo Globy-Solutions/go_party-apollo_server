@@ -1,41 +1,48 @@
 import casual from 'casual'
 import { notification } from '..'
-
-import type UserProps from '../../types/user'
+import { AllowedRoles } from '../../types/rol'
 import { roles } from '../rol/resolvers'
 
-export const users = [
+import type RolProps from '../../types/rol'
+import type UserProps from '../../types/user'
+
+export type UserRegisterd = {
+  id?: UserProps['id']
+  rol?: RolProps | RolProps['id']
+  email?: UserProps['email']
+}
+export const users: UserRegisterd[] = [
+  {
+    rol: 0,
+    email: 'user@go_party.fun',
+  },
   {
     rol: 1,
-    password: '123',
     email: 'rrpp@go_party.fun',
   },
   {
     rol: 2,
-    password: '123',
     email: 'leader@go_party.fun',
   },
   {
     rol: 3,
-    password: '123',
     email: 'organizator@go_party.fun',
   },
   {
     rol: 4,
-    password: '123',
     email: 'owner@go_party.fun',
   }
 ]
-export const user = (
-  id?: UserProps['id'],
-  email?: UserProps['email']
-) => ({
+export const user = ({ id, email, rol }: UserRegisterd) => ({
   id: id || casual.uuid,
   name: casual.name,
   email: email || casual.email,
-  rol: email ? users.find(
-    (user) => user.email === email)?.rol || 0 : 0,
+  rol: rol ?? casual.random_element(
+    Array.from({ length: Object.values(AllowedRoles).length }, (_, i) => i)
+  ),
   phone: casual.phone,
+  isActive: casual.boolean,
+  password: casual.password,
   avatar: casual.random_element([
     'https://robohash.org/7TQ.png',
     'https://robohash.org/MLS.png',
@@ -48,16 +55,40 @@ export const user = (
 })
 export default {
   Query: {
-    getUserById: async (_: any, { id }: { id: UserProps['id'] }, { auth }: { auth?: boolean }) => {
-      let data: any = null
-      if (auth) {
-        data = user(id)
+    getAllUsers: async () => {
+      const data = users.map(({ email, rol }) => user({ email, rol }))
+      return { data, notification: notification.success }
+      // return { data: Array.from({ length: 3 }, () => user({})), notification: notification.success }
+    },
+    getUserById: async (_: any, { id }: { id: UserProps['email'] }) => {
+      const userFinded = users.find((user) => user.email === id)
+      if (userFinded) {
+        const { email, rol }: UserRegisterd = userFinded
+        const data = user({ email, rol })
+        return {
+          data,
+          notification: notification.success
+        }
       }
-      return { data, notification: !data ? notification.error : notification.success }
+      return {
+        data: {},
+        notification: notification.warning
+      }
     }
-
   },
   User: {
-    rol: async ({ rol }: { rol: number }) => await roles().find((availablesRoles: any) => availablesRoles.id == rol)
+    rol: async ({ rol }: { rol: RolProps['id'] }) => {
+      return roles()[rol]
+    }
+  },
+  Mutation: {
+    createUser: async (_: unknown,
+      { input }: { input: Partial<UserProps> },
+    ) => {
+      input.id = casual.uuid
+      input.created_date = casual.date()
+      input.updated_date = casual.date()
+      return { data: input, notification: notification.success }
+    }
   }
 }

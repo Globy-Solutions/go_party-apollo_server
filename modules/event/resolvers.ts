@@ -20,7 +20,7 @@ export const event = (created_by?: UserProps['id']) => ({
   },
   image: casual.integer(1, 3),
   pictures: Array.from({ length: 3 }, () => 'https://loremflickr.com/320/240/night,party/all'),
-  videos: [casual.url],
+  videos: Array.from({ length: 3 }, () => casual.url),
   price: casual.integer(1000, 3000),
   address: casual.address,
   about: casual.description,
@@ -31,7 +31,7 @@ export const event = (created_by?: UserProps['id']) => ({
   likes: casual.array_of_digits(3),
   goinTo: casual.array_of_digits(3),
   comments: casual.array_of_digits(3),
-  created_by: created_by ? created_by : user(casual.uuid).id,
+  created_by: created_by ? created_by : user({ id: casual.uuid }).id,
   created_date: casual.date(),
   updated_date: casual.date()
 })
@@ -55,19 +55,19 @@ export default {
   Event: {
     followers: async ({ followers }: { followers: UserProps[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
-        return followers.map(({ id }: { id: UserProps['id'] }) => user(id))
+        return followers.map(({ id }: { id: UserProps['id'] }) => user({ id }))
       }
       return []
     },
     likes: async ({ likes }: { likes: UserProps[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
-        return likes.map(({ id }: { id: UserProps['id'] }) => user(id))
+        return likes.map(({ id }: { id: UserProps['id'] }) => user({ id }))
       }
       return []
     },
     goinTo: async ({ goinTo }: { goinTo: UserProps[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
-        return goinTo.map(({ id }: { id: UserProps['id'] }) => user(id))
+        return goinTo.map(({ id }: { id: UserProps['id'] }) => user({ id }))
       }
       return []
     },
@@ -83,7 +83,6 @@ export default {
       { input }: { input: Partial<EventProps> },
       { auth }: { auth: boolean }
     ) => {
-      console.log('createEvent', input);
       if (auth) {
         input.id = casual.uuid
         input.created_date = casual.date()

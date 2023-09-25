@@ -15,11 +15,11 @@ const history = () => ({
     return { id, text }
   }),
   followeds: Array.from({ length: 3 }, () => {
-    const { id, name, avatar } = user()
+    const { id, name, avatar } = user({})
     return { id, name, avatar }
   }),
   followers: Array.from({ length: 3 }, () => {
-    const { id, name, avatar } = user()
+    const { id, name, avatar } = user({})
     return { id, name, avatar }
   }),
   created_date: casual.date(),

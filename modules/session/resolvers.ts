@@ -1,7 +1,9 @@
 import casual from 'casual';
 import { notification } from '..';
+import { user, users } from '../user/resolvers';
 
 import type UserProps from '../../types/user';
+import type { UserRegisterd } from '../user/resolvers';
 
 type VariableValuesProps = {
   variableValues: Pick<UserProps, 'email' | 'password'>
@@ -10,33 +12,23 @@ type VariableValuesProps = {
 const testPassword: string = '123';
 export default {
   Query: {
-    signIn: async (_: any, { password }: { password: UserProps['password'] }) => ({ notification: password === testPassword ? notification.success : notification.error })
+    signIn: async (_: any, { email, password }: VariableValuesProps['variableValues']) => (
+      { notification: (email && password === testPassword) ? notification.success : notification.error }
+    )
   },
   SignIn: {
     data: async (_parent: any, _args: any, _context: any, {
       variableValues: { email, password } }: VariableValuesProps
-      ) => {
-      console.log('SignIn => data', { email, password });
-      /*
-      return users.find((u: Partial<UserProps>) => {
-        if (u.password === password && u.email === email) {
-          const userLogged = user(undefined, email);
-          console.log('userLogged', userLogged);
-          return userLogged
-        }
-      })
-      */
-      return {
-        id: '7630291e-2642-4ee8-9acb-4ed89b85469f',
-        name: 'Mr. Travon Goyette',
-        avatar: 'https://robohash.org/5JZ.png',
-        phone: '701-922-9793',
-        email,
-        rol: 1,
-        isActive: true,
-        created_date: '2004-07-28',
-        updated_date: '1991-12-16'
+    ) => {
+      if (!email || !password) return null
+      if (password !== testPassword) return null
+      const userFinded = users.find((user) => user.email === email.toLowerCase())
+      if (userFinded) {
+        const { email, rol }: UserRegisterd = userFinded
+        const data = user({ email, rol })
+        return data
       }
+      return user({ email, rol: 0 })
     },
     session: async (_parent: any, _args: any, _context: any, { variableValues: { password } }: any) =>
       password == testPassword ? ({
