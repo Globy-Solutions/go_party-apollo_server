@@ -40,6 +40,12 @@ export default {
         return members.map(({ id }: { id: UserProps['id'] }) => user({ id }))
       }
       return []
+    },
+    created_by: async ({ created_by }: { created_by: UserProps['id'] }, _args: any, { auth }: { auth?: boolean }) => {
+      if (auth) {
+        return user({ id: created_by })
+      }
+      return null
     }
   },
   Mutation: {

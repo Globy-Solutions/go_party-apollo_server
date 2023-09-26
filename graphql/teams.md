@@ -1,9 +1,8 @@
 ```
 fragment Data on Team {
-  id name created_by created_date isActive
-  members {
-    id name
-  }
+  id name created_date isActive
+  created_by { id name avatar }
+  members { id name avatar }
 }
 query getAllTeams($isActive: Boolean, $by: ID) {
   getAllTeams(isActive: $isActive, by: $by) {
@@ -16,8 +15,8 @@ query getAllTeams($isActive: Boolean, $by: ID) {
     }
   }
 }
-query getTeamById($getTeamId: ID!) {
-  getTeamById(id: $getTeamId) {
+query getTeamById($teamId: ID!) {
+  getTeamById(id: $teamId) {
     data {
       ...Data
     }
