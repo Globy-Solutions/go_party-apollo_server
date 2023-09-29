@@ -12,7 +12,7 @@ const team = (created_by?: UserProps['id']) => ({
   members: Array.from({ length: 3 }, () => user({ id: casual.uuid }).id),
   isActive: casual.boolean,
   events: Array.from({ length: 3 }, () => {
-    const { id, title, isActive } = event()
+    const { id, title, isActive } = event({})
     return { id, title, isActive }
   }),
   created_by: created_by ? created_by : user({ id: casual.uuid }).id,

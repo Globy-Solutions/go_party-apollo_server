@@ -3,11 +3,12 @@ type Place implements ABM {
   id: ID!
   name: String!
   description: String
+  webSite: String
   image: String
   address: String
   latitude: Float
   longitude: Float
-  category: ID!
+  category: Category!
   created_by: ID!
   isActive: Boolean
   created_date: Date!

@@ -1,7 +1,10 @@
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginCacheControl } from '@apollo/server/plugin/cacheControl';
 import { ApolloServerPluginLandingPageDisabled } from '@apollo/server/plugin/disabled';
-import { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } from '@apollo/server/plugin/landingPage/default';
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault
+} from '@apollo/server/plugin/landingPage/default';
 
 import { startStandaloneServer } from '@apollo/server/standalone';
 
@@ -27,20 +30,20 @@ const server = new ApolloServer<MyContext>({
       // Cache everything for 1 second by default.
       defaultMaxAge: 1,
       // Don't send the `cache-control` response header.
-      calculateHttpHeaders: false,
-    }),
-  ],
+      calculateHttpHeaders: false
+    })
+  ]
 });
 (async () => {
   const { url } = await startStandaloneServer(server, {
     context: async ({ req }) => ({
       auth: getAuth(req.headers.authentication),
       dataSources: {
-        userApi: null,
+        userApi: null
       },
     }),
-    listen: { port: 4000 },
+    listen: { port: 4000 }
   });
 
-  console.log(`🚀  Server ready at: ${url}`);
+  console.log(`🚀  Server ready at: ${url}`)
 })()

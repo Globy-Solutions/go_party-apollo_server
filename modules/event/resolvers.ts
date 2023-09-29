@@ -1,23 +1,21 @@
 import casual from 'casual';
 import { PubSub } from 'graphql-subscriptions';
 import { notification } from '..';
+import { allowedCategories } from '../category/resolvers';
 import { comment } from '../comment/resolvers';
 import { user } from '../user/resolvers';
 
+import type { Props } from '../../types/';
 import type CommentProps from '../../types/comments';
 import type EventProps from '../../types/events';
 import type UserProps from '../../types/user';
 
 const pubsub = new PubSub()
-
-export const event = (created_by?: UserProps['id']) => ({
-  id: casual.uuid,
+export const event = ({ id, by, isActive }: Props<string, string>) => ({
+  id: id ?? casual.uuid,
   title: casual.title,
   name: casual.name,
-  isActive: casual.boolean,
-  categoryId: {
-    id: casual.integer(1, 3),
-  },
+  categoryId: casual.integer(1, allowedCategories.length),
   image: casual.integer(1, 3),
   pictures: Array.from({ length: 3 }, () => 'https://loremflickr.com/320/240/night,party/all'),
   videos: Array.from({ length: 3 }, () => casual.url),
@@ -31,23 +29,26 @@ export const event = (created_by?: UserProps['id']) => ({
   likes: casual.array_of_digits(3),
   goinTo: casual.array_of_digits(3),
   comments: casual.array_of_digits(3),
-  created_by: created_by ? created_by : user({ id: casual.uuid }).id,
+  created_by: by ? by : user({ id: casual.uuid }).id,
+  isActive: isActive ?? casual.boolean,
   created_date: casual.date(),
   updated_date: casual.date()
 })
 
 export default {
   Query: {
-    getAllEvents: async (_: unknown, { by }: { by?: EventProps['id'] }) => {
+    getAllEvents: async (_: unknown, { isActive, by }: { isActive?: boolean; by?: string }) => {
+      let data: EventProps[] = []
       if (by) {
-        return { data: Array.from({ length: 3 }, () => event(by)), notification: notification.success }
+        data = Array.from({ length: 3 }, () => event({ by }))
       }
-      return { data: Array.from({ length: 3 }, () => event()), notification: notification.success }
+      return { data: Array.from({ length: 3 }, () => event({})), notification: notification.success }
+
     },
     getEventById: async (_: unknown, { id }: { id: EventProps['id'] }) => {
       let eventFound = {}
       if (id) {
-        eventFound = event()
+        eventFound = event({})
       }
       return { data: eventFound, notification: Object.keys(eventFound).length < 0 ? notification.error : notification.success }
     }
@@ -73,7 +74,7 @@ export default {
     },
     comments: async ({ comments }: { comments: CommentProps[] }, _args: any, { auth }: { auth?: boolean }) => {
       if (auth) {
-        return comments.map(({ id }: { id: CommentProps['id'] }) => comment(id))
+        return comments.map(({ id }: { id: CommentProps['id'] }) => comment({ id }))
       }
       return []
     }

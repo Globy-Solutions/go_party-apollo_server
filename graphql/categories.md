@@ -2,8 +2,8 @@
 fragment Data on Category {
   id name picture description isActive
 }
-query getAllCategories($isActive: Boolean, $userId: ID) {
-  getAllCategories(isActive: $isActive, by: $userId) {
+query getAllCategories($isActive: Boolean) {
+  getAllCategories(isActive: $isActive) {
     data {
       ...Data
     }

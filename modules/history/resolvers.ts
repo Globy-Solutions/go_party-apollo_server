@@ -7,11 +7,11 @@ import { user } from '../user/resolvers';
 
 const history = () => ({
   events: Array.from({ length: 3 }, () => {
-    const { id, name, image, pictures } = event()
+    const { id, name, image, pictures } = event({})
     return { id, name, image, pictures }
   }),
   comments: Array.from({ length: 3 }, () => {
-    const { id, text } = comment()
+    const { id, text } = comment({ id: casual.uuid })
     return { id, text }
   }),
   followeds: Array.from({ length: 3 }, () => {

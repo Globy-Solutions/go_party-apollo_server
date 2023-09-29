@@ -21,7 +21,7 @@ type CategoryResponse implements Response {
   data: Category
 }
 extend type Query {
-  getAllCategories(isActive: Boolean, by: ID): CategoriesResponse!
+  getAllCategories(isActive: Boolean): CategoriesResponse!
   getCategoryById(id: String!): CategoryResponse!
 }
 input CategoryInput {

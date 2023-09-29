@@ -2,7 +2,7 @@ export default `
 interface EventInt implements ABM{
   title: String!
   name: String!
-  categoryId: Category!
+  categoryId: Int!
   image: Int
   pictures: [String]
   videos: [String]
@@ -21,7 +21,7 @@ type Event implements EventInt & ABM {
   id: ID!
   title: String!
   name: String!
-  categoryId: Category!
+  categoryId: Int!
   image: Int
   pictures: [String]
   videos: [String]
