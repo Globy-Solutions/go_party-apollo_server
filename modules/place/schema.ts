@@ -8,8 +8,8 @@ type Place implements ABM {
   address: String
   latitude: Float
   longitude: Float
-  category: Category!
-  created_by: ID!
+  created_by: User
+  categoryId: Category
   isActive: Boolean
   created_date: Date!
   updated_date: Date
@@ -29,12 +29,13 @@ extend type Query {
 input PlaceInput {
   name: String!
   description: String
+  webSite: String
   image: String
   address: String
   latitude: Float
   longitude: Float
-  category: ID!
-  created_by: ID!
+  created_by: String
+  categoryId: Int
   isActive: Boolean
   created_date: Date!
   updated_date: Date

@@ -1,6 +1,7 @@
 ```
 fragment Data on Event {
   created_by
+  categoryId
   about
   isActive
   id
@@ -31,9 +32,6 @@ fragment Data on Event {
   }
   comments {
     id
-    userId {
-      id name
-    }
     text
   }
   created_date
@@ -50,8 +48,8 @@ query getAllEvents($isActive: Boolean, $by: ID) {
     }
   }
 }
-query getEventById($eventById: ID!) {
-  getEventById(id: $eventById) {
+query getEventById($eventId: ID!) {
+  getEventById(id: $eventId) {
     data {
       ...Data
     }

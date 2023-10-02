@@ -1,7 +1,7 @@
 export default `
 type Comment implements ABM {
   id: String!
-  created_by: String
+  created_by: User
   categoryId: Int
   text: String
   isActive: Boolean
