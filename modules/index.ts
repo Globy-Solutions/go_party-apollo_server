@@ -49,6 +49,14 @@ const rootTypeDefs = `
   interface Response {
     notification: Notification
   }
+  interface SocialNetwork {
+    comments: [Comment]
+    followeds: [User]
+    followers: [User]
+    likes: [User]
+    goinTo: [User]
+    tags: [String]
+  }
   type Notification implements NotificationInt {
     type: String!
     message: String!

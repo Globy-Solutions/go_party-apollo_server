@@ -2,46 +2,83 @@ import casual from 'casual'
 import { PubSub } from 'graphql-subscriptions'
 import { notification } from '..'
 import { allowedCategories, category } from '../category/resolvers'
-import { UserRegisterd, user } from '../user/resolvers'
+import { comment } from '../comment/resolvers'
+import { user } from '../user/resolvers'
 
 import type { Props } from '../../types/'
+import CommentProps from '../../types/comments'
 import type PlaceProps from '../../types/place'
+import type UserProps from '../../types/user'
 
 const pubsub = new PubSub()
-const randomId = casual.integer(0, allowedCategories.length -1)
-const place = ({ id, by, isActive }: Props<string, string>) => ({
+export const place = ({ id, by, isActive }: Props<string, string>) => ({
   id: id ?? casual.uuid,
   isActive: isActive ?? casual.boolean,
-  // created_by: by ? by : user({ id: casual.uuid }).id,
   name: casual.title,
   description: casual.description,
   webSite: casual.url,
-  image: 'https://loremflickr.com/320/240/night,party/all',
+  image: casual.integer(0, 2),
+  pictures: Array.from({ length: 3 }, () => 'https://loremflickr.com/320/240/night,party/all'),
   address: casual.address,
   latitude: casual.latitude,
+  longitude: casual.longitude,
+  followeds: casual.array_of_digits(3),
+  followers: casual.array_of_digits(3),
+  comments: casual.array_of_digits(3),
+  likes: casual.array_of_digits(3),
+  goinTo: casual.array_of_digits(3),
+  tags: casual.array_of_words(3),
+  created_by: by ?? casual.uuid,
   created_date: casual.date(),
   updated_date: casual.date(),
-  longitude: casual.longitude,
-  // categoryId: category({ id: randomId, name: allowedCategories[randomId] })
 })
 
 export default {
   Query: {
-    getAllPlaces: async (_: unknown, { isActive, by }: Props<string, string>) => {
-      const data = Array.from({ length: 3 }, () => place({ by, isActive }))
+    getAllPlaces: async (_: unknown, { isActive, by }: Props<boolean, string>) => {
+      const data = Array.from({ length: 3 }, () => place({ isActive, by }))
       return { data, notification: notification.success }
     },
-    getPlaceById: async (_: any, { id }: { id: string }) =>
-      ({ data: place({ id }), notification: notification.success })
+    getPlaceById: async (_: any, { id }: { id: string }) => ({ data: place({ id }), notification: notification.success })
   },
   Place: {
-    created_by: async ({ userId }: { userId: UserRegisterd['id'] }) => user({ id: userId }),
+    created_by: async ({ created_by }: { created_by: PlaceProps['created_by'] }) => user({ id: created_by }),
     categoryId: async () => {
       const id = casual.integer(0, allowedCategories.length)
       return category({
         id, name: allowedCategories[id],
       })
-    }
+    },
+    comments: async ({ comments }: { comments: CommentProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+      // if (!auth) { return [] }
+      return comments.map((id: CommentProps['id']) => {
+        return comment({ id })
+      })
+    },
+    followeds: async ({ followeds }: { followeds: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return [] }
+      return followeds.map((id: UserProps['id']) => {
+        return user({ id })
+      })
+    },
+    followers: async ({ followers }: { followers: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return [] }
+      return followers.map((id: UserProps['id']) => {
+        return user({ id })
+      })
+    },
+    likes: async ({ likes }: { likes: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return [] }
+      return likes.map((like: UserProps['id']) => {
+        return user({ id: like })
+      })
+    },
+    goinTo: async ({ goinTo }: { goinTo: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return [] }
+      return goinTo.map((id: UserProps['id']) => {
+        return user({ id })
+      })
+    },
   },
   Mutation: {
     createPlace: async (_: unknown,
@@ -52,14 +89,17 @@ export default {
         input.id = casual.uuid
         input.created_date = casual.date()
         input.updated_date = casual.date()
+        if (input.isActive === undefined) { input.isActive = true }
+        if (input.image === undefined) { input.image = 0 }
         return { data: input, notification: notification.success }
       }
+      pubsub.publish('NEW_PLACE', {});
       return { notification: notification.warning }
     }
   },
   Subscription: {
     newPlace() {
-      pubsub.publish('PLACE_PUBLISHED', {});
+      console.log('NEW_PLACE');
       return null
     }
   }

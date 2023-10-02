@@ -2,21 +2,15 @@
 fragment Data on History {
   created_date
   updated_date
+  places {
+    id name pictures image
+  }
   events {
     id name pictures image
   }
-  comments {
-    id
-    userId {
-      id name avatar
-    }
-  }
-  followeds {
-    id name avatar
-  }
-  followers {
-    id name avatar
-  }
+  comments { id text }
+  followeds { id name avatar }
+  followers { id name avatar }
   created_date
 }
 
@@ -25,9 +19,7 @@ query history($userId: ID!) {
     data {
       ...Data
     }
-    notification {
-      type message
-    }
+    notification { type message }
   }
 }
 ```

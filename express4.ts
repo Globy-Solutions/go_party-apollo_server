@@ -12,7 +12,7 @@ import { createServer } from 'http';
 import { WebSocketServer } from 'ws';
 
 import { resolvers, typeDefs } from './modules';
-import { myPlugin } from './plugins/myPlugin';
+import myPlugin from './plugins/myPlugin';
 
 // Create the schema, which will be used separately by ApolloServer and
 // the WebSocket server.

@@ -1,16 +1,23 @@
 export default `
-type Place implements ABM {
+type Place implements ABM & SocialNetwork {
   id: ID!
   name: String!
   description: String
   webSite: String
-  image: String
+  image: Int
+  pictures: [String]
   address: String
   latitude: Float
   longitude: Float
   created_by: User
   categoryId: Category
   isActive: Boolean
+  comments: [Comment]
+  followeds: [User]
+  followers: [User]
+  tags: [String]
+  likes: [User]
+  goinTo: [User]
   created_date: Date!
   updated_date: Date
 }
@@ -30,7 +37,8 @@ input PlaceInput {
   name: String!
   description: String
   webSite: String
-  image: String
+  image: Int
+  pictures: [String]
   address: String
   latitude: Float
   longitude: Float

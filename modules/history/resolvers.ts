@@ -2,6 +2,7 @@ import casual from 'casual'
 import { notification } from '..'
 import { comment } from '../comment/resolvers'
 import { event } from '../event/resolvers'
+import { place } from '../place/resolvers'
 import { user } from '../user/resolvers'
 
 import type UserProps from '../../types/user'
@@ -22,25 +23,24 @@ export default {
       const { id, name, image, pictures } = event({})
       return { id, name, image, pictures }
     }),
+    places: async (_parent: any, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return [] }
+      return Array.from({ length: 3 }, () => place({ by: casual.uuid }))
+    },
     comments: async (_parent: any, _args: any, { auth }: { auth?: boolean }) => {
       if (!auth) { return [] }
-      return Array.from({ length: 3 }, () => {
-        const { id, text } = comment({ id: casual.uuid })
-        return { id, text }
-      })
+      return Array.from({ length: 3 }, () => comment({ id: casual.uuid }))
     },
     followeds: async (_parent: any, _args: any, { auth }: { auth?: boolean }) => {
       if (!auth) { return [] }
       return Array.from({ length: 3 }, () => {
-        const { id, name, avatar } = user({})
-        return { id, name, avatar }
+        return user({})
       })
     },
     followers: async (_parent: any, _args: any, { auth }: { auth?: boolean }) => {
       if (!auth) { return [] }
       return Array.from({ length: 3 }, () => {
-        const { id, name, avatar } = user({})
-        return { id, name, avatar }
+        return user({})
       })
     },
     created_date: async () => casual.date(),

@@ -33,10 +33,11 @@ export const users: UserRegisterd[] = [
     email: 'owner@go_party.fun',
   }
 ]
+const name = casual.name
 export const user = ({ id, email, rol }: UserRegisterd) => ({
-  id: id || casual.uuid,
-  name: casual.name,
-  email: email || casual.email,
+  id: id ?? casual.uuid,
+  name: id ? name : casual.name,
+  email: email ?? casual.email,
   rol: rol ?? casual.random_element(
     Array.from({ length: Object.values(AllowedRoles).length }, (_, i) => i)
   ),
