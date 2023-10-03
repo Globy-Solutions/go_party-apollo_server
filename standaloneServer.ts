@@ -14,7 +14,7 @@ interface MyContext {
   token?: String;
 }
 
-const getAuth = (token: string | string[] | undefined) => true // token !== '' && token !== undefined;
+const getAuth = (token: string | string[] | undefined) => token !== '' && token !== undefined;
 const server = new ApolloServer<MyContext>({
   typeDefs,
   resolvers,

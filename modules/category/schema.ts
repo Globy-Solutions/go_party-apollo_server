@@ -9,6 +9,9 @@ type Category implements ABM {
   picture: String
   description: String
   isActive: Boolean
+  followers: [User]
+  tags: [String]
+  likes: [User]
   created_date: Date!
   updated_date: Date
 }

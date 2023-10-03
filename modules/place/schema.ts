@@ -12,6 +12,7 @@ type Place implements ABM & SocialNetwork {
   created_by: User
   categoryId: Category
   isActive: Boolean
+  events: [Event]
   comments: [Comment]
   followeds: [User]
   followers: [User]

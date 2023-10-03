@@ -3,10 +3,12 @@ import { PubSub } from 'graphql-subscriptions'
 import { notification } from '..'
 import { allowedCategories, category } from '../category/resolvers'
 import { comment } from '../comment/resolvers'
+import { event } from '../event/resolvers'
 import { user } from '../user/resolvers'
 
 import type { Props } from '../../types/'
-import CommentProps from '../../types/comments'
+import type CommentProps from '../../types/comments'
+import type EventProps from '../../types/events'
 import type PlaceProps from '../../types/place'
 import type UserProps from '../../types/user'
 
@@ -22,6 +24,7 @@ export const place = ({ id, by, isActive }: Props<string, string>) => ({
   address: casual.address,
   latitude: casual.latitude,
   longitude: casual.longitude,
+  events: Array.from({ length: 3 }, () => casual.uuid),
   followeds: casual.array_of_digits(3),
   followers: casual.array_of_digits(3),
   comments: casual.array_of_digits(3),
@@ -49,36 +52,26 @@ export default {
         id, name: allowedCategories[id],
       })
     },
-    comments: async ({ comments }: { comments: CommentProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
-      // if (!auth) { return [] }
-      return comments.map((id: CommentProps['id']) => {
-        return comment({ id })
-      })
+    comments: async ({ comments }: { comments: CommentProps['id'][] }) => {
+      return comments.map((id: CommentProps['id']) => comment({ id }))
     },
     followeds: async ({ followeds }: { followeds: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (!auth) { return [] }
-      return followeds.map((id: UserProps['id']) => {
-        return user({ id })
-      })
+      if (!auth) { return followeds }
+      return followeds.map((id: UserProps['id']) => user({ id }))
     },
     followers: async ({ followers }: { followers: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (!auth) { return [] }
-      return followers.map((id: UserProps['id']) => {
-        return user({ id })
-      })
+      if (!auth) { return followers }
+      return followers.map((id: UserProps['id']) => user({ id }))
     },
     likes: async ({ likes }: { likes: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (!auth) { return [] }
-      return likes.map((like: UserProps['id']) => {
-        return user({ id: like })
-      })
+      if (!auth) { return likes }
+      return likes.map((like: UserProps['id']) => user({ id: like }))
     },
     goinTo: async ({ goinTo }: { goinTo: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (!auth) { return [] }
-      return goinTo.map((id: UserProps['id']) => {
-        return user({ id })
-      })
+      if (!auth) { return goinTo }
+      return goinTo.map((id: UserProps['id']) => user({ id }))
     },
+    events: async ({ events }: { events: EventProps['id'][] }) => events.map((id: EventProps['id']) => event({ id }))
   },
   Mutation: {
     createPlace: async (_: unknown,

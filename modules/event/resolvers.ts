@@ -1,12 +1,11 @@
 import casual from 'casual';
 import { PubSub } from 'graphql-subscriptions';
 import { notification } from '..';
-import { allowedCategories, category } from '../category/resolvers';
+import { allowedCategories } from '../category/resolvers';
 import { comment } from '../comment/resolvers';
 import { user } from '../user/resolvers';
 
 import type { Props } from '../../types/';
-import type CategoryProps from '../../types/category';
 import type CommentProps from '../../types/comments';
 import type EventProps from '../../types/events';
 import type UserProps from '../../types/user';
@@ -16,7 +15,7 @@ export const event = ({ id, by, isActive }: Props<string, string>) => ({
   id: id ?? casual.uuid,
   title: casual.title,
   name: casual.name,
-  categoryId: casual.integer(1, allowedCategories.length),
+  categoryId: casual.integer(0, allowedCategories.length),
   image: casual.integer(1, 3),
   pictures: Array.from({ length: 3 }, () => 'https://loremflickr.com/320/240/night,party/all'),
   videos: Array.from({ length: 3 }, () => casual.url),
@@ -26,10 +25,10 @@ export const event = ({ id, by, isActive }: Props<string, string>) => ({
   latitude: Number(casual.latitude),
   longitude: Number(casual.longitude),
   tags: casual.array_of_words(3),
-  followers: casual.array_of_digits(3),
-  likes: casual.array_of_digits(3),
-  goinTo: casual.array_of_digits(3),
-  comments: casual.array_of_digits(3),
+  followers: Array.from({ length: 3 }, () => casual.uuid),
+  likes: Array.from({ length: 3 }, () => casual.uuid),
+  goinTo: Array.from({ length: 3 }, () => casual.uuid),
+  comments: Array.from({ length: 3 }, () => casual.uuid),
   created_by: by ? by : user({ id: casual.uuid }).id,
   isActive: isActive ?? casual.boolean,
   created_date: casual.date(),
@@ -39,11 +38,8 @@ export const event = ({ id, by, isActive }: Props<string, string>) => ({
 export default {
   Query: {
     getAllEvents: async (_: unknown, { isActive, by }: Props<boolean, string>) => {
-      let data: EventProps[] = []
-      if (by) {
-        data = Array.from({ length: 3 }, () => event({ isActive, by }))
-      }
-      return { data: Array.from({ length: 3 }, () => event({})), notification: notification.success }
+      console.log('getAllEvents', { isActive, by });
+      return { data: Array.from({ length: 3 }, () => event({ isActive, by })), notification: notification.success }
 
     },
     getEventById: async (_: unknown, { id }: { id: EventProps['id'] }) => {
@@ -55,37 +51,20 @@ export default {
     }
   },
   Event: {
-    categoryId: async ({ categoryId }: { categoryId: CategoryProps['id'] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (auth) {
-        const res: CategoryProps = category({ id: categoryId, name: allowedCategories[categoryId] })
-        const categoryFound = Boolean(res.name)
-        return { data: categoryFound ? res : {}, notification: categoryFound ? notification.success : notification.error }
-      }
-      return []
+    followers: async ({ followers }: { followers: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return followers }
+      return followers.map((id: UserProps['id']) => user({ id }))
     },
-    followers: async ({ followers }: { followers: UserProps[] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (auth) {
-        return followers.map(({ id }: { id: UserProps['id'] }) => user({ id }))
-      }
-      return []
+    likes: async ({ likes }: { likes: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return likes }
+      return likes.map((like: UserProps['id']) => user({ id: like }))
     },
-    likes: async ({ likes }: { likes: UserProps[] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (auth) {
-        return likes.map(({ id }: { id: UserProps['id'] }) => user({ id }))
-      }
-      return []
+    goinTo: async ({ goinTo }: { goinTo: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return goinTo }
+      return goinTo.map((id: UserProps['id']) => user({ id }))
     },
-    goinTo: async ({ goinTo }: { goinTo: UserProps[] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (auth) {
-        return goinTo.map(({ id }: { id: UserProps['id'] }) => user({ id }))
-      }
-      return []
-    },
-    comments: async ({ comments }: { comments: CommentProps[] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (auth) {
-        return comments.map(({ id }: { id: CommentProps['id'] }) => comment({ id }))
-      }
-      return []
+    comments: async ({ comments }: { comments: CommentProps['id'][] }) => {
+      return comments.map((id: CommentProps['id']) => comment({ id }))
     }
   },
   Mutation: {
