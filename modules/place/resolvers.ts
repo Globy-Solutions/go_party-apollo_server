@@ -11,6 +11,7 @@ import type CommentProps from '../../types/comments'
 import type EventProps from '../../types/events'
 import type PlaceProps from '../../types/place'
 import type UserProps from '../../types/user'
+import { plan } from '../plan/resolvers'
 
 const pubsub = new PubSub()
 export const place = ({ id, by, isActive }: Props<string, string>) => ({
@@ -31,9 +32,10 @@ export const place = ({ id, by, isActive }: Props<string, string>) => ({
   likes: casual.array_of_digits(3),
   goinTo: casual.array_of_digits(3),
   tags: casual.array_of_words(3),
+  plans: Array.from({ length: 3 }, () => plan({})),
   created_by: by ?? casual.uuid,
   created_date: casual.date(),
-  updated_date: casual.date(),
+  updated_date: casual.date()
 })
 
 export default {

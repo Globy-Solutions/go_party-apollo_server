@@ -1,21 +1,23 @@
-import { default as CategoryResolvers } from './category/resolvers';
-import { default as CategorySchema } from './category/schema';
-import { default as CommentResolvers } from './comment/resolvers';
-import { default as CommentSchema } from './comment/schema';
-import { default as EventResolvers } from './event/resolvers';
-import { default as EventSchema } from './event/schema';
-import { default as HistoryResolvers } from './history/resolvers';
-import { default as HistorySchema } from './history/schema';
-import { default as PlaceResolvers } from './place/resolvers';
-import { default as PlaceSchema } from './place/schema';
-import { default as RolResolvers } from './rol/resolvers';
-import { default as RolSchema } from './rol/schema';
-import { default as SessionResolvers } from './session/resolvers';
-import { default as SessionSchema } from './session/schema';
-import { default as TeamResolvers } from './team/resolvers';
-import { default as TeamSchema } from './team/schema';
-import { default as UserResolvers } from './user/resolvers';
-import { default as UserSchema } from './user/schema';
+import { default as CategoryResolvers } from './category/resolvers'
+import { default as CategorySchema } from './category/schema'
+import { default as CommentResolvers } from './comment/resolvers'
+import { default as CommentSchema } from './comment/schema'
+import { default as EventResolvers } from './event/resolvers'
+import { default as EventSchema } from './event/schema'
+import { default as HistoryResolvers } from './history/resolvers'
+import { default as HistorySchema } from './history/schema'
+import { default as PlaceResolvers } from './place/resolvers'
+import { default as PlaceSchema } from './place/schema'
+import { default as PlanResolvers } from './plan/resolvers'
+import { default as PlanSchema } from './plan/schema'
+import { default as RolResolvers } from './rol/resolvers'
+import { default as RolSchema } from './rol/schema'
+import { default as SessionResolvers } from './session/resolvers'
+import { default as SessionSchema } from './session/schema'
+import { default as TeamResolvers } from './team/resolvers'
+import { default as TeamSchema } from './team/schema'
+import { default as UserResolvers } from './user/resolvers'
+import { default as UserSchema } from './user/schema'
 
 export const notification = {
   error: {
@@ -92,7 +94,8 @@ export const typeDefs = [
   CommentSchema,
   HistorySchema,
   TeamSchema, 
-  PlaceSchema
+  PlaceSchema,
+  PlanSchema
 ]
 export const resolvers = [
   rootResolvers,
@@ -104,5 +107,6 @@ export const resolvers = [
   CommentResolvers,
   HistoryResolvers,
   TeamResolvers,
-  PlaceResolvers
+  PlaceResolvers,
+  PlanResolvers
 ]

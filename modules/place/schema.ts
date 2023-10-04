@@ -19,6 +19,7 @@ type Place implements ABM & SocialNetwork {
   tags: [String]
   likes: [User]
   goinTo: [User]
+  plans: [Plan]
   created_date: Date!
   updated_date: Date
 }
