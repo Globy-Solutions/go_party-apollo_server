@@ -1,11 +1,11 @@
 export default `
 type EventsAssigned {
-  rol: Rol
-  events: [Event]
+  rol: Rol!
+  event: Event!
 }
 type PlacesAssigned {
-  rol: Rol
-  places: [Place]
+  rol: Rol!
+  place: Place!
 }
 type Relation {
   events: [EventsAssigned]
