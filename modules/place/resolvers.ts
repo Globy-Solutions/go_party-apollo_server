@@ -44,7 +44,7 @@ export default {
       const data = Array.from({ length: 3 }, () => place({ isActive, by }))
       return { data, notification: notification.success }
     },
-    getPlaceById: async (_: any, { id }: { id: string }) => ({ data: place({ id }), notification: notification.success })
+    getPlaceById: async (_: any, { id }: { id: string }) => ({ data: place({ id }), notification: notification.success }).data
   },
   Place: {
     created_by: async ({ created_by }: { created_by: PlaceProps['created_by'] }) => user({ id: created_by }),

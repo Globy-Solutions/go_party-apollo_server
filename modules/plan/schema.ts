@@ -18,8 +18,8 @@ type PlansResponse implements Response {
   data: [Plan]
 }
 extend type Query {
-  getPlanById(id: ID!): PlanResponse
-  getPlansByPlace(by: ID!): PlansResponse
+  getPlanById(id: ID!, isActive: Boolean): PlanResponse
+  getPlansByPlace(by: ID!, isActive: Boolean): PlansResponse
 }
 input PlanInput {
   name: String!

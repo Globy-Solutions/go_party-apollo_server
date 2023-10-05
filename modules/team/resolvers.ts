@@ -24,29 +24,23 @@ export default {
   Query: {
     getAllTeams: async (_: unknown, { isActive, by }: { isActive?: boolean; by?: string }) => {
       console.log({ isActive, by });
-      const teams = Array.from({ length: 3 }, () => team());
+      const teams = Array.from({ length: 3 }, () => team(by));
+      console.log(teams);
       return { data: teams, notification: notification.success }
     },
-    getTeamById: async (_: any, { id }: { id: string }) => {
-      if (id) {
-        return { data: team(), notification: notification.success }
-      }
-      return { data: null, notification: notification.error }
+    getTeamById: async (_: unknown, {id}:{id: TeamProps['id']}) => {
+      if (!id) { return null }
+      const data = team(id)
+      console.log(data);
+      return { data, notification: notification.success }
     }
   },
   Team: {
-    members: async ({ members }: { members: UserProps[] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (auth) {
-        return members.map(({ id }: { id: UserProps['id'] }) => user({ id }))
-      }
-      return []
+    members: async ({ members }: { members: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return members }
+      return members.map((id: UserProps['id']) => user({ id }))
     },
-    created_by: async ({ created_by }: { created_by: UserProps['id'] }, _args: any, { auth }: { auth?: boolean }) => {
-      if (auth) {
-        return user({ id: created_by })
-      }
-      return null
-    }
+    created_by: async ({ created_by }: { created_by: UserProps['id'] }) => user({ id: created_by })
   },
   Mutation: {
     createTeam: async (_: unknown,

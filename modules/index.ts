@@ -10,6 +10,8 @@ import { default as PlaceResolvers } from './place/resolvers'
 import { default as PlaceSchema } from './place/schema'
 import { default as PlanResolvers } from './plan/resolvers'
 import { default as PlanSchema } from './plan/schema'
+import { default as RelationsResolvers } from './relations/resolvers'
+import { default as RelationsSchema } from './relations/schema'
 import { default as RolResolvers } from './rol/resolvers'
 import { default as RolSchema } from './rol/schema'
 import { default as SessionResolvers } from './session/resolvers'
@@ -19,6 +21,7 @@ import { default as TeamSchema } from './team/schema'
 import { default as UserResolvers } from './user/resolvers'
 import { default as UserSchema } from './user/schema'
 
+export const randomWords = (arr: string[]) => arr[(Math.floor(Math.random() * arr.length))]
 export const notification = {
   error: {
     type: 'error', message: 'Not found'
@@ -86,27 +89,14 @@ const rootResolvers = {
 
 export const typeDefs = [
   rootTypeDefs,
-  SessionSchema,
-  RolSchema,
-  UserSchema,
-  CategorySchema,
-  EventSchema,
-  CommentSchema,
-  HistorySchema,
-  TeamSchema, 
-  PlaceSchema,
-  PlanSchema
+  SessionSchema, RolSchema, UserSchema,
+  CategorySchema, EventSchema, CommentSchema,
+  HistorySchema, TeamSchema, PlaceSchema,
+  PlanSchema, RelationsSchema
 ]
 export const resolvers = [
   rootResolvers,
-  SessionResolvers,
-  RolResolvers,
-  UserResolvers,
-  CategoryResolvers,
-  EventResolvers,
-  CommentResolvers,
-  HistoryResolvers,
-  TeamResolvers,
-  PlaceResolvers,
-  PlanResolvers
+  SessionResolvers, RolResolvers, UserResolvers, CategoryResolvers,
+  EventResolvers, CommentResolvers, HistoryResolvers, TeamResolvers,
+  PlaceResolvers, PlanResolvers, RelationsResolvers
 ]

@@ -3,6 +3,7 @@ type Team implements ABM {
   id: ID!
   name: String!
   members: [User]
+  events: [Event]
   created_by: User!
   isActive: Boolean
   created_date: Date!
