@@ -10,6 +10,7 @@ export type UserRegisterd = {
   id?: UserProps['id']
   rol?: RolProps | RolProps['id']
   email?: UserProps['email']
+  isActive?: UserProps['isActive']
 }
 export const users: UserRegisterd[] = [
   {
@@ -34,15 +35,15 @@ export const users: UserRegisterd[] = [
   }
 ]
 const name = casual.name
-export const user = ({ id, email, rol }: UserRegisterd) => ({
+export const user = ({ id, email, rol, isActive }: UserRegisterd) => ({
   id: id ?? casual.uuid,
   name: id ? name : casual.name,
   email: email ?? casual.email,
   rol: rol ?? casual.random_element(
-    Array.from({ length: Object.values(AllowedRoles).length }, (_, i) => i)
+    Array.from({ length: Object.values(AllowedRoles).length / 2 }, (_, i) => i)
   ),
   phone: casual.phone,
-  isActive: casual.boolean,
+  isActive: isActive ?? casual.boolean,
   password: casual.password,
   avatar: casual.random_element([
     'https://robohash.org/7TQ.png',
@@ -56,25 +57,22 @@ export const user = ({ id, email, rol }: UserRegisterd) => ({
 })
 export default {
   Query: {
-    getAllUsers: async () => {
-      const data = users.map(({ email, rol }) => user({ email, rol }))
-      return { data, notification: notification.success }
-      // return { data: Array.from({ length: 3 }, () => user({})), notification: notification.success }
+    getAllUsers: async (_: any, { isActive }: { isActive?: boolean }) => {
+      console.log('getAllUsers', { isActive });
+      return {
+        notification: notification.success,
+        data: Array.from({ length: 3 }, () => user({ isActive }))
+      }
     },
     getUserById: async (_: any, { id }: { id: UserProps['email'] }) => {
       const userFinded = users.find((user) => user.email === id)
-      if (userFinded) {
-        const { email, rol }: UserRegisterd = userFinded
-        const data = user({ email, rol })
+      if (!id) {
         return {
-          data,
-          notification: notification.success
+          data: {},
+          notification: notification.warning
         }
       }
-      return {
-        data: {},
-        notification: notification.warning
-      }
+      return { data: user({ id }), notification: notification.success }
     }
   },
   User: {

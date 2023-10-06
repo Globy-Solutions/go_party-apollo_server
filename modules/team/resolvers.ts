@@ -23,15 +23,12 @@ const team = (created_by?: UserProps['id']) => ({
 export default {
   Query: {
     getAllTeams: async (_: unknown, { isActive, by }: { isActive?: boolean; by?: string }) => {
-      console.log({ isActive, by });
       const teams = Array.from({ length: 3 }, () => team(by));
-      console.log(teams);
       return { data: teams, notification: notification.success }
     },
     getTeamById: async (_: unknown, {id}:{id: TeamProps['id']}) => {
       if (!id) { return null }
       const data = team(id)
-      console.log(data);
       return { data, notification: notification.success }
     }
   },

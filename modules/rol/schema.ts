@@ -10,7 +10,7 @@ type Rol implements ABM {
   id: Int!
   name: AllowedRoles
   description: String
-  isActive: Boolean
+  isActive: Boolean!
   created_date: Date!
   updated_date: Date
 }

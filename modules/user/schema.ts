@@ -20,7 +20,7 @@ type UserResponse implements Response {
   data: User
 }
 extend type Query {
-  getAllUsers: UsersResponse
+  getAllUsers(isActive: Boolean): UsersResponse
   getUserById(id: ID!): UserResponse
 }
 input UserInput {
