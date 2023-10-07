@@ -1,5 +1,5 @@
 export default `
-interface EventInt implements ABM{
+interface EventInt implements ABM {
   title: String!
   name: String!
   categoryId: Int!

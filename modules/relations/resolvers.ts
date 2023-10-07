@@ -4,6 +4,8 @@ import { event } from '../event/resolvers'
 import { place } from '../place/resolvers'
 import { roles } from '../rol/resolvers'
 
+import date from '../../plugins/date'
+import type RelationProps from '../../types/relation'
 import type { EventsAssigned, PlacesAssigned } from '../../types/relation'
 import type RolProps from '../../types/rol'
 
@@ -20,7 +22,7 @@ export const relation = () => ({
       roles().map((rol: RolProps) => rol.id)
     ), place: casual.uuid
   })),
-  updated_date: casual.date()
+  updated_date: date()
 })
 export default {
   Query: {
@@ -44,5 +46,16 @@ export default {
         place: place({ id })
       })
       ))
+  },
+  Mutation: {
+    updateRelationForUser: async (_: any,
+      { input }: { input: RelationProps },
+      { auth }: { auth: boolean }
+    ) => {
+      if (!auth || !input) {
+        return { ...notification.error }
+      }
+      return { ...notification.success }
+    }
   }
 }
