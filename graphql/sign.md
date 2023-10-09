@@ -6,9 +6,7 @@ fragment Data on SignIn {
       name
       email
       phone
-      rol { 
-        id name
-      }
+      rol
       created_date
       updated_date
     }

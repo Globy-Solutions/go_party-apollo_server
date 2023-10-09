@@ -1,18 +1,17 @@
 import casual from 'casual'
 import { notification } from '..'
 import { AllowedRoles } from '../../types/rol'
-import { roles } from '../rol/resolvers'
 
 import type RolProps from '../../types/rol'
 import type UserProps from '../../types/user'
 
 export type UserRegisterd = {
   id?: UserProps['id']
-  rol?: RolProps | RolProps['id']
+  rol?: RolProps['id']
   email?: UserProps['email']
   isActive?: UserProps['isActive']
 }
-export const users: UserRegisterd[] = [
+export const users: Pick<UserRegisterd,'email'|'rol'>[] = [
   {
     rol: 0,
     email: 'user@go_party.fun',
@@ -57,27 +56,18 @@ export const user = ({ id, email, rol, isActive }: UserRegisterd) => ({
 })
 export default {
   Query: {
-    getAllUsers: async (_: any, { isActive }: { isActive?: boolean }) => {
-      console.log('getAllUsers', { isActive });
-      return {
-        notification: notification.success,
-        data: Array.from({ length: 3 }, () => user({ isActive }))
-      }
-    },
+    getAllUsers: async (_: any, { isActive }: { isActive?: boolean }) => ({
+      notification: notification.success,
+      data: Array.from({ length: 3 }, () => user({ isActive }))
+    }),
     getUserById: async (_: any, { id }: { id: UserProps['email'] }) => {
-      const userFinded = users.find((user) => user.email === id)
       if (!id) {
         return {
-          data: {},
+          data: null,
           notification: notification.warning
         }
       }
       return { data: user({ id }), notification: notification.success }
-    }
-  },
-  User: {
-    rol: async ({ rol }: { rol: RolProps['id'] }) => {
-      return roles()[rol]
     }
   },
   Mutation: {

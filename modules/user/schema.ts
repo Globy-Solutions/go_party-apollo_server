@@ -6,7 +6,7 @@ type User implements ABM {
   phone: String
   email: String!
   password: String
-  rol: Rol
+  rol: Int
   isActive: Boolean
   created_date: Date!
   updated_date: Date

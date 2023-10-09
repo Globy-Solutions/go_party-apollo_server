@@ -5,10 +5,7 @@ fragment Data on User {
   avatar
   phone
   email
-  rol {
-    id
-    name
-  }
+  rol
 }
 query getAllUsers {
   getAllUsers {
