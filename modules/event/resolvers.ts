@@ -1,7 +1,6 @@
 import casual from 'casual'
 import { PubSub } from 'graphql-subscriptions'
 import { notification } from '..'
-import { allowedCategories } from '../category/resolvers'
 import { comment } from '../comment/resolvers'
 import { user } from '../user/resolvers'
 
@@ -15,7 +14,7 @@ export const event = ({ id, by, isActive }: Props<string, string>) => ({
   id: id ?? casual.uuid,
   title: casual.title,
   name: casual.name,
-  categoryId: casual.integer(0, allowedCategories.length),
+  placeId: casual.uuid,
   image: casual.integer(1, 3),
   pictures: Array.from({ length: 3 }, () => 'https://loremflickr.com/320/240/night,party/all'),
   videos: Array.from({ length: 3 }, () => casual.url),

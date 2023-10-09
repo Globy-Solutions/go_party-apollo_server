@@ -5,13 +5,19 @@ import { user } from '../user/resolvers'
 import type { Props } from '../../types'
 import type PlanProps from '../../types/plan'
 
+const distribution = () => Array.from({ length: 2 }, () => ({
+  name: randomWords(['room', 'table']),
+  total: casual.integer(1, 10),
+  image: `https://loremflickr.com/320/240/${randomWords(['museum', 'park', 'fountain', 'disco', 'party', 'birthday'])}/all`,
+  availables: casual.integer(1, 6),
+  isActive: casual.boolean,
+  updated_date: casual.date()
+}))
 export const plan = ({ id, by, isActive }: Props<string, string>) => ({
   id: id ?? casual.uuid,
-  name: casual.title,
   description: casual.description,
-  pictures: Array.from({ length: 5 }, () => `https://loremflickr.com/320/240/${randomWords(['museum', 'park', 'fountain', 'disco', 'party', 'birthday'])}/all`),
-  // pictures: Array.from({ length: 3 }, () => `https://loremflickr.com/320/240/disco,party,birthday/all`),
   isActive: isActive ?? casual.boolean,
+  placeDistribution: distribution(),
   created_by: by ?? casual.uuid,
   created_date: casual.date(),
   updated_date: casual.date()

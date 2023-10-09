@@ -2,7 +2,7 @@ export default `
 interface EventInt implements ABM {
   title: String!
   name: String!
-  categoryId: Int!
+  placeId: ID
   image: Int
   pictures: [String]
   videos: [String]
@@ -21,7 +21,7 @@ type Event implements EventInt & ABM {
   id: ID!
   title: String!
   name: String!
-  categoryId: Int!
+  placeId: ID
   image: Int
   pictures: [String]
   videos: [String]
@@ -55,7 +55,7 @@ extend type Query {
 input EventInput {
   title: String!
   name: String!
-  categoryId: Int!
+  placeId: ID
   pictures: [String]
   videos: [String]
   price: Float

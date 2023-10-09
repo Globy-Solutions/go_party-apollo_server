@@ -10,7 +10,6 @@ type Place implements ABM & SocialNetwork {
   latitude: Float
   longitude: Float
   created_by: User
-  categoryId: Category
   isActive: Boolean
   events: [Event]
   comments: [Comment]
@@ -45,7 +44,6 @@ input PlaceInput {
   latitude: Float
   longitude: Float
   created_by: String
-  categoryId: Int
   isActive: Boolean
   created_date: Date!
   updated_date: Date

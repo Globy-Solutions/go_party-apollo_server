@@ -1,7 +1,6 @@
 import casual from 'casual'
 import { PubSub } from 'graphql-subscriptions'
 import { notification } from '..'
-import { allowedCategories, category } from '../category/resolvers'
 import { comment } from '../comment/resolvers'
 import { event } from '../event/resolvers'
 import { user } from '../user/resolvers'
@@ -32,7 +31,7 @@ export const place = ({ id, by, isActive }: Props<string, string>) => ({
   likes: casual.array_of_digits(3),
   goinTo: casual.array_of_digits(3),
   tags: casual.array_of_words(3),
-  plans: Array.from({ length: 3 }, () => plan({})),
+  plans: Array.from({ length: 2 }, () => plan({})),
   created_by: by ?? casual.uuid,
   created_date: casual.date(),
   updated_date: casual.date()
@@ -44,16 +43,13 @@ export default {
       const data = Array.from({ length: 3 }, () => place({ isActive, by }))
       return { data, notification: notification.success }
     },
-    getPlaceById: async (_: any, { id }: { id: string }) => ({ data: place({ id }), notification: notification.success }).data
+    getPlaceById: async (_: any, { id }: { id: string }) => {
+      const data = place({ id })
+      return { data, notification: notification.success }
+    }
   },
   Place: {
-    created_by: async ({ created_by }: { created_by: PlaceProps['created_by'] }) => user({ id: created_by }),
-    categoryId: async () => {
-      const id = casual.integer(0, allowedCategories.length)
-      return category({
-        id, name: allowedCategories[id],
-      })
-    },
+    created_by: async ({ created_by }: { created_by: PlaceProps<undefined>['created_by'] }) => user({ id: created_by }),
     comments: async ({ comments }: { comments: CommentProps['id'][] }) => {
       return comments.map((id: CommentProps['id']) => comment({ id }))
     },
@@ -77,7 +73,7 @@ export default {
   },
   Mutation: {
     createPlace: async (_: unknown,
-      { input }: { input: Partial<PlaceProps> },
+      { input }: { input: Partial<PlaceProps<undefined>> },
       { auth }: { auth: boolean }
     ) => {
       if (auth) {

@@ -22,9 +22,12 @@ const server = new ApolloServer<MyContext>({
   cache: 'bounded',
   plugins: [
     process.env.NODE_ENV === 'production'
-      ? (ApolloServerPluginLandingPageProductionDefault({
-        footer: false,
-      }), ApolloServerPluginLandingPageDisabled())
+      ? (
+        ApolloServerPluginLandingPageProductionDefault({
+          footer: false,
+        }),
+        ApolloServerPluginLandingPageDisabled()
+      )
       : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
     ApolloServerPluginCacheControl({
       // Cache everything for 1 second by default.

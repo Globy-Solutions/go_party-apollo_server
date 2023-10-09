@@ -1,11 +1,19 @@
 export default `
+type PlaceDistribution implements ABM {
+  name: String
+  total: Int
+  image: String
+  availables: Int
+  isActive: Boolean
+  created_date: Date!
+  updated_date: Date
+}
 type Plan implements ABM {
   id: ID!
-  name: String!
   description: String
-  pictures: [String]
   isActive: Boolean
-  created_by: User
+  created_by: Int!
+  placeDistribution: [PlaceDistribution]
   created_date: Date!
   updated_date: Date
 }
@@ -24,7 +32,6 @@ extend type Query {
 input PlanInput {
   name: String!
   description: String
-  pictures: [String]
   isActive: Boolean
   created_by: Int
   created_date: Date!
