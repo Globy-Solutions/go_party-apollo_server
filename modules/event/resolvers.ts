@@ -52,15 +52,18 @@ export default {
     }
   },
   Event: {
-    followers: async ({ followers }: { followers: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+    followers: async ({ followers }: { followers: UserProps['id'][] }, _args: any,
+      { auth }: { auth?: boolean }) => {
       if (!auth) { return followers }
       return followers.map((id: UserProps['id']) => user({ id }))
     },
-    likes: async ({ likes }: { likes: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+    likes: async ({ likes }: { likes: UserProps['id'][] }, _args: any,
+      { auth }: { auth?: boolean }) => {
       if (!auth) { return likes }
       return likes.map((like: UserProps['id']) => user({ id: like }))
     },
-    goinTo: async ({ goinTo }: { goinTo: UserProps['id'][] }, _args: any, { auth }: { auth?: boolean }) => {
+    goinTo: async ({ goinTo }: { goinTo: UserProps['id'][] }, _args: any,
+      { auth }: { auth?: boolean }) => {
       if (!auth) { return goinTo }
       return goinTo.map((id: UserProps['id']) => user({ id }))
     },
