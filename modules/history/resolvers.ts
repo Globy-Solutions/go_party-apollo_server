@@ -1,44 +1,49 @@
-import casual from 'casual';
+import casual from 'casual'
+import { notification } from '..'
+import { comment } from '../comment/resolvers'
+import { event } from '../event/resolvers'
+import { place } from '../place/resolvers'
+import { user } from '../user/resolvers'
 
-const bd_histories = require('../../__mocks__/user_histories.json');
-const bd_events = require('../../__mocks__/events.json')
-const bd_comments = require('../../__mocks__/comments.json')
+import type UserProps from '../../types/user'
 
+// TODO, the user history must be updated each time the user add a new event, comment, follow or follower, and save it in the database
 export default {
   Query: {
-    history: async (_: any, { id }: { id: string }) => {
-      const { events, comments, followeds, followers } = await bd_histories.find((history: any) => history.userId = id)
-      return { events, comments, followeds, followers }
+    history: async (_: any, { userId }: { userId: UserProps['id'] }, { auth }: { auth?: boolean }) => {
+      if (userId && auth) {
+        // const data = history()
+        return { data: [], notification: notification.success }
+      }
+      return { data: [], notification: notification.success }
     }
   },
-  /*
   History: {
-    events: ({ events }: any) => events.map(({ id }: any) => bd_events.find((event: any) => event.id == id)),
-    comments: ({ comments }: any) => comments.map(({ id }: any) => bd_comments.find((comment: any) => comment.userId == id)),
-    followeds: ({ followeds }: any) => followeds.map((id: any) => bd_users.find((user: any) => user.id == id)),
-    followers: ({ followers }: any) => followers.map((id: any) => bd_users.find((user: any) => user.id == id))
-  }
-  */
-  History: {
-    events: ({ events }: any) => events.map(({ id }: any) => bd_events.find((event: any) => event.id == id)),
-    comments: ({ comments }: any) => comments.map(({ id }: any) => bd_comments.find((comment: any) => comment.userId == id)),
-    followeds: () => ({
-      id: casual.uuid,
-      name: casual.name,
-      email: casual.email,
-      password: casual.password,
-      rol: casual.integer(1, 3),
-      phone: casual.phone,
-      avatar: 'https://i.pravatar.cc/100',
+    events: async () => Array.from({ length: 3 }, () => {
+      const { id, name, image, pictures } = event({})
+      return { id, name, image, pictures }
     }),
-    followers: () => ({
-      id: casual.uuid,
-      name: casual.name,
-      email: casual.email,
-      password: casual.password,
-      rol: casual.integer(1, 3),
-      phone: casual.phone,
-      avatar: 'https://i.pravatar.cc/100',
-    })
+    places: async (_parent: any, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return [] }
+      return Array.from({ length: 3 }, () => place({ by: casual.uuid }))
+    },
+    comments: async (_parent: any, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return [] }
+      return Array.from({ length: 3 }, () => comment({ id: casual.uuid }))
+    },
+    followeds: async (_parent: any, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return [] }
+      return Array.from({ length: 3 }, () => {
+        return user({})
+      })
+    },
+    followers: async (_parent: any, _args: any, { auth }: { auth?: boolean }) => {
+      if (!auth) { return [] }
+      return Array.from({ length: 3 }, () => {
+        return user({})
+      })
+    },
+    created_date: async () => casual.date(),
+    updated_date: async () => casual.date()
   }
 }

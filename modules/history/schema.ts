@@ -1,19 +1,22 @@
 export default `
-type History implements ABM {
-  id: ID!
-  events: [Event!]
+type History implements ABM & SocialNetwork {
+  events: [Event]
+  places: [Place]
   comments: [Comment]
   followeds: [User]
   followers: [User]
-  created_date: Date
+  tags: [String]
+  likes: [User]
+  goinTo: [User]
+  isActive: Boolean
+  created_date: Date!
   updated_date: Date
-  deleted_date: Date
 }
 type HistoryResponse implements Response {
   notification: Notification
   data: History
 }
 extend type Query {
-  history(id: ID!): HistoryResponse
+  history(userId: ID!): HistoryResponse
 }
 `

@@ -1,10 +1,8 @@
 export default `
-type Event implements ABM {
-  id: ID!
+interface EventInt implements ABM {
   title: String!
   name: String!
-  isActive: Boolean
-  categoryId: Category!
+  placeId: ID
   image: Int
   pictures: [String]
   videos: [String]
@@ -14,25 +12,65 @@ type Event implements ABM {
   latitude: Float
   longitude: Float
   tags: [String]
+  created_by: ID!
+  isActive: Boolean
+  created_date: Date!
+  updated_date: Date
+}
+type Event implements EventInt & ABM {
+  id: ID!
+  title: String!
+  name: String!
+  placeId: ID
+  image: Int
+  pictures: [String]
+  videos: [String]
+  price: Float
+  address: String
+  about: String
+  latitude: Float
+  longitude: Float
+  tags: [String]
+  created_by: ID!
   followers: [User]
   likes: [User]
   goinTo: [User]
   comments: [Comment]
+  isActive: Boolean
   created_date: Date!
   updated_date: Date
-  deleted_date: Date
 }
 type EventsResponse implements Response {
-  notification: Notification
   data: [Event]
+  notification: Notification
 }
 type EventResponse implements Response {
-  notification: Notification
   data: Event
+  notification: Notification
 }
 extend type Query {
-  getAllEvents(isActive: Boolean): EventsResponse
+  getAllEvents(isActive: Boolean, by: ID): EventsResponse
   getEventById(id: ID!): EventResponse
+}
+input EventInput {
+  title: String!
+  name: String!
+  placeId: ID
+  pictures: [String]
+  videos: [String]
+  price: Float
+  address: String
+  about: String
+  latitude: Float
+  longitude: Float
+  tags: [String]
+  created_by: Int!
+  isActive: Boolean
+  created_date: Date!
+  updated_date: Date
+}
+extend type Mutation {
+  createEvent(input: EventInput): EventResponse
 }
 type Subscription {
   newEvent: Event

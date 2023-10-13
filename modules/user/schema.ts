@@ -5,11 +5,11 @@ type User implements ABM {
   avatar: String
   phone: String
   email: String!
-  password: String!
-  rol: Rol!
-  created_date: Date
+  password: String
+  rol: Int
+  isActive: Boolean
+  created_date: Date!
   updated_date: Date
-  deleted_date: Date
 }
 type UsersResponse implements Response {
   notification: Notification
@@ -20,6 +20,21 @@ type UserResponse implements Response {
   data: User
 }
 extend type Query {
+  getAllUsers(isActive: Boolean): UsersResponse
   getUserById(id: ID!): UserResponse
+}
+input UserInput {
+  name: String!
+  avatar: String
+  phone: String
+  email: String!
+  password: String
+  created_date: Date
+}
+extend type Mutation {
+  createUser(input: UserInput): UserResponse
+}
+type Subscription {
+  newUser: User
 }
 `

@@ -1,25 +1,28 @@
-import { default as CategoryResolvers } from './category/resolvers';
-import { default as CategorySchema } from './category/schema';
-import { default as CommentResolvers } from './comment/resolvers';
-import { default as CommentSchema } from './comment/schema';
-import { default as EventResolvers } from './event/resolvers';
-import { default as EventSchema } from './event/schema';
-import { default as HistoryResolvers } from './history/resolvers';
-import { default as HistorySchema } from './history/schema';
-import { default as RolResolvers } from './rol/resolvers';
-import { default as RolSchema } from './rol/schema';
-import { default as SessionResolvers } from './session/resolvers';
-import { default as SessionSchema } from './session/schema';
-import { default as UserResolvers } from './user/resolvers';
-import { default as UserSchema } from './user/schema';
+import { default as CategoryResolvers } from './category/resolvers'
+import { default as CategorySchema } from './category/schema'
+import { default as CommentResolvers } from './comment/resolvers'
+import { default as CommentSchema } from './comment/schema'
+import { default as EventResolvers } from './event/resolvers'
+import { default as EventSchema } from './event/schema'
+import { default as HistoryResolvers } from './history/resolvers'
+import { default as HistorySchema } from './history/schema'
+import { default as PlaceResolvers } from './place/resolvers'
+import { default as PlaceSchema } from './place/schema'
+import { default as PlanResolvers } from './plan/resolvers'
+import { default as PlanSchema } from './plan/schema'
+import { default as RelationsResolvers } from './relations/resolvers'
+import { default as RelationsSchema } from './relations/schema'
+import { default as RolResolvers } from './rol/resolvers'
+import { default as RolSchema } from './rol/schema'
+import { default as SessionResolvers } from './session/resolvers'
+import { default as SessionSchema } from './session/schema'
+import { default as TeamResolvers } from './team/resolvers'
+import { default as TeamSchema } from './team/schema'
+import { default as UserResolvers } from './user/resolvers'
+import { default as UserSchema } from './user/schema'
 
-import type { AllowedNotification, Notification } from '../types';
-
-type NotificationType = {
-  [key in AllowedNotification]: Notification
-}
-
-export const notification: NotificationType = {
+export const randomWords = (arr: string[]) => arr[(Math.floor(Math.random() * arr.length))]
+export const notification = {
   error: {
     type: 'error', message: 'Not found'
   },
@@ -37,19 +40,31 @@ export const notification: NotificationType = {
 const rootTypeDefs = `
   scalar Date
   interface ABM {
-    created_date: Date
+    isActive: Boolean
+    created_date: Date!
     updated_date: Date
-    deleted_date: Date
   }
   type Query {
     hello: String
   }
-  interface Notification {
+  interface NotificationInt {
     type: String
     message: String
   }
   interface Response {
     notification: Notification
+  }
+  interface SocialNetwork {
+    comments: [Comment]
+    followeds: [User]
+    followers: [User]
+    likes: [User]
+    goinTo: [User]
+    tags: [String]
+  }
+  type Notification implements NotificationInt {
+    type: String!
+    message: String!
   }
   type Subscription {
     sayHello: String
@@ -74,21 +89,14 @@ const rootResolvers = {
 
 export const typeDefs = [
   rootTypeDefs,
-  SessionSchema,
-  RolSchema,
-  UserSchema,
-  CategorySchema,
-  EventSchema,
-  CommentSchema,
-  HistorySchema
+  SessionSchema, RolSchema, UserSchema,
+  CategorySchema, EventSchema, CommentSchema,
+  HistorySchema, TeamSchema, PlaceSchema,
+  PlanSchema, RelationsSchema
 ]
 export const resolvers = [
   rootResolvers,
-  SessionResolvers,
-  RolResolvers,
-  UserResolvers,
-  CategoryResolvers,
-  EventResolvers,
-  CommentResolvers,
-  HistoryResolvers
+  SessionResolvers, RolResolvers, UserResolvers, CategoryResolvers,
+  EventResolvers, CommentResolvers, HistoryResolvers, TeamResolvers,
+  PlaceResolvers, PlanResolvers, RelationsResolvers
 ]

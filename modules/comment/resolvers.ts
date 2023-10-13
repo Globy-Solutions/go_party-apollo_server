@@ -1,33 +1,41 @@
 import casual from 'casual'
-const bd_comments = require('../../__mocks__/comments.json')
+import { notification } from '..'
+import { allowedCategories, category } from '../category/resolvers'
+import { user } from '../user/resolvers'
 
+import type { Props } from '../../types/'
+import type { UserRegisterd } from '../user/resolvers'
+
+export const comment = ({ id, by, isActive }: Props<string, string>) => ({
+  id: id ?? casual.uuid,
+  isActive: isActive ?? casual.boolean,
+  created_by: by ? by : user({ id: casual.uuid }).id,
+  categoryId: casual.integer(1, allowedCategories.length),
+  text: casual.text,
+  created_date: casual.date()
+})
 export default {
   Query: {
-    getCommentsByUser: async (_: unknown, { userId }: { userId?: number }, { token }: any) => {
-      // if (userId && token) {
-      const comments = await bd_comments.filter((comment: any) => comment.userId == userId)
-      // }
-      return comments
-    },
-    getCommentById: async (_: unknown, { id }: { id: string }, { token }: any) => {
-      let data: any[] = []
-      let comment: {} = bd_comments.find((comment: { id: string | number }) => comment.id == id)
-      if (comment) {
-        data.push(comment)
+    getCommentsByUser: async (_: unknown, { userId }: { userId: string }) => {
+      if (userId) {
+        const data = Array.from({ length: 3 }, () => comment({ by: userId }))
+        return { data, notification: notification.success }
       }
-      return { data }
+      return { data: [], notification: notification.error }
+    },
+    getCommentById: async (_: unknown, { id }: { id: string }) => {
+      const data = Array.from({ length: 3 }, () => comment({ id }))
+      return { data, notification: data ? notification.success : notification.error }
     }
   },
   Comment: {
-    /* userId: async ({ userId }: { userId: string }) => await bd_users.find((user: any) => user.id == userId) */
-    userId: async () => ({
-      id: casual.uuid,
-      name: casual.name,
-      email: casual.email,
-      password: casual.password,
-      rol: casual.integer(1, 3),
-      phone: casual.phone,
-      avatar: 'https://i.pravatar.cc/100',
-    })
+    created_by: async ({ userId }: { userId: UserRegisterd['id'] }) => user({ id: userId }).id,
+    categoryId: async () => {
+      const id = casual.integer(1, allowedCategories.length)
+      return category({
+        id, name: allowedCategories[id],
+      }).id
+    }
   }
+
 }

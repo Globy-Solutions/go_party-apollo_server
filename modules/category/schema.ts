@@ -1,19 +1,19 @@
 export default `
 enum AllowedCategories {
-  Events
-  Places
-  Other
-  Another
+  events
+  places
 }
 type Category implements ABM {
   id: ID!
   name: AllowedCategories
-  isActive: Boolean
   picture: String
   description: String
-  created_date: Date
+  isActive: Boolean
+  followers: [User]
+  tags: [String]
+  likes: [User]
+  created_date: Date!
   updated_date: Date
-  deleted_date: Date
 }
 type CategoriesResponse implements Response {
   notification: Notification
@@ -25,6 +25,10 @@ type CategoryResponse implements Response {
 }
 extend type Query {
   getAllCategories(isActive: Boolean): CategoriesResponse!
-  getCategoryById(id: ID!): CategoryResponse!
+  getCategoryById(id: String!): CategoryResponse!
+}
+input CategoryInput {
+  name: AllowedCategories
+  isActive: Boolean
 }
 `

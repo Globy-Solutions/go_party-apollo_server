@@ -1,16 +1,19 @@
 export default `
 type Comment implements ABM {
-  id: ID!
-  userId: User
-  categoryId: Category
+  id: String!
+  created_by: User
+  categoryId: Int
   text: String
-  isAvailable: Int
-  created_date: Date
+  isActive: Boolean
+  created_date: Date!
   updated_date: Date
-  deleted_date: Date
+}
+type CommentResponse implements Response {
+  notification: Notification
+  data: [Comment]
 }
 extend type Query {
-  getCommentsByUser(userId: ID): [Comment!]
-  getCommentById(id: ID!): [Comment!]
+  getCommentById(id: ID!): CommentResponse
+  getCommentsByUser(userId: ID): CommentResponse
 }
 `
