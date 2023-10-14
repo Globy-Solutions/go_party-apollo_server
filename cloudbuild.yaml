@@ -1,11 +1,12 @@
 steps:
 
-  # Docker Pull & Tag image
+  # Docker Pull
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['pull',
-           'katuno/apollo-server:v1',
-           'tag', 'katuno/apollo-server', 'gcr.io/go-party_apollo-server:v1'
-           ]
+    args: ['pull', 'katuno/apollo-server:v1']
+
+  # DockerTag image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'katuno/apollo-server:v1', 'gcr.io/go-party_apollo-server:v1']
 
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
@@ -15,8 +16,7 @@ steps:
 
   # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push',
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/apollo-server']
+    args: ['push', 'us-central1-docker.pkg.dev/${PROJECT_ID}/apollo-server']
 
   # Entrypoint, timeout and environment variables
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
