@@ -14,6 +14,8 @@ interface MyContext {
   token?: String;
 }
 
+const port: number = 8080;
+const production: boolean = process.env.NODE_ENV === 'production';
 const getAuth = (token: string | string[] | undefined) => true // token !== '' && token !== undefined;
 const server = new ApolloServer<MyContext>({
   typeDefs,
@@ -21,14 +23,14 @@ const server = new ApolloServer<MyContext>({
   csrfPrevention: true,
   cache: 'bounded',
   plugins: [
-    process.env.NODE_ENV === 'production'
+    production
       ? (
         ApolloServerPluginLandingPageProductionDefault({
-          footer: false,
+          footer: production,
         }),
         ApolloServerPluginLandingPageDisabled()
       )
-      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+      : ApolloServerPluginLandingPageLocalDefault({ footer: production }),
     ApolloServerPluginCacheControl({
       // Cache everything for 1 second by default.
       defaultMaxAge: 1,
@@ -45,7 +47,7 @@ const server = new ApolloServer<MyContext>({
         userApi: null
       },
     }),
-    listen: { port: 4000 }
+    listen: { port }
   });
 
   console.log(`🚀  Server ready at: ${url}`)

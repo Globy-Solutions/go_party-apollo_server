@@ -1,12 +1,12 @@
 {
   "name": "apollo_server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "license": "MIT",
   "scripts": {
     "compile": "tsc",
     "start:compile": "yarn compile && node ./dist/index.js",
-    "start": "nodemon --watch './**' --ext 'ts,json' --exec 'ts-node ./standaloneServer.ts'"
+    "start": "nodemon --watch './**' --ext 'ts,json' --exec 'ts-node ./index.ts'"
   },
   "dependencies": {
     "@apollo/server": "4.9.4",
