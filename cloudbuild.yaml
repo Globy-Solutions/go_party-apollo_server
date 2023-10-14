@@ -1,9 +1,11 @@
 steps:
 
-  # Docker Pull
+  # Docker Pull & Tag image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['pull',
-           'katuno/apollo-server:v1']
+           'katuno/apollo-server:v1',
+           'tag', 'katuno/apollo-server', 'gcr.io/go-party_apollo-server:v1'
+           ]
 
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
