@@ -4,28 +4,24 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['pull', 'katuno/apollo-server:v1']
 
-  # DockerTag image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['tag', 'katuno/apollo-server:v1', 'gcr.io/go-party_apollo-server:v1']
-
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t',
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/apollo-server',
+           'gcr.io/go-party-2023/github.com/globy-solutions/go_party-apollo_server',
            '.']
 
   # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/${PROJECT_ID}/apollo-server']
+    args: ['push', 'gcr.io/go-party-2023/github.com/globy-solutions/go_party-apollo_server']
 
   # Entrypoint, timeout and environment variables
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     timeout: 240s
-    args: ['compute', 'instances',
-           'create-with-container', 'go_party-apollo_server',
-           '--container-image',
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/apollo-server']
+    args: ['run', 'deploy', 'go_party-apollo_server',
+           '--image', 'gcr.io/go-party-2023/github.com/globy-solutions/go_party-apollo_server',
+            '--region', 'us-central1', '--allow-unauthenticated'
+           ]
     env:
       - 'CLOUDSDK_COMPUTE_REGION=us-central1'
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
