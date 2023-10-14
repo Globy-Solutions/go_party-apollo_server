@@ -8,13 +8,13 @@ steps:
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t',
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/go-party/apollo-server',
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/apollo-server',
            '.']
 
   # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push',
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/go-party/apollo-server']
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/apollo-server']
 
   # Entrypoint, timeout and environment variables
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -23,7 +23,7 @@ steps:
     args: ['compute', 'instances',
            'create-with-container', 'go_party-apollo_server',
            '--container-image',
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/go-party/apollo-server']
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/apollo-server']
     env:
       - 'CLOUDSDK_COMPUTE_REGION=us-central1'
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
