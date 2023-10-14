@@ -1,4 +1,10 @@
 steps:
+
+  # Docker Pull
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['pull',
+           'katuno/apollo-server:v1']
+
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t',
