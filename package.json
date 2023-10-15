@@ -6,11 +6,7 @@
   "scripts": {
     "compile": "tsc",
     "start:compile": "yarn compile && node ./dist/index.js",
-<<<<<<< HEAD
     "start": "nodemon --watch './**' --ext 'ts,json' --exec 'ts-node ./index.ts'"
-=======
-    "start": "nodemon --watch './**' --ext 'ts,json' --exec 'ts-node ./standaloneServer.ts'"
->>>>>>> master
   },
   "dependencies": {
     "@apollo/server": "4.9.4",
