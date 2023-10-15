@@ -16,7 +16,7 @@ interface MyContext {
 
 const port: number = 8080;
 const production: boolean = process.env.NODE_ENV === 'production';
-const getAuth = (token: string | string[] | undefined) => true // token !== '' && token !== undefined;
+const getAuth = (token: string | string[] | undefined) => token !== '' && token !== undefined;
 const server = new ApolloServer<MyContext>({
   typeDefs,
   resolvers,
